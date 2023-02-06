@@ -1,8 +1,9 @@
 import pkg from 'sqlite3';
 
-const {verbose} = pkg;
+const { verbose } = pkg;
 
 import fs from "fs";
+import { IDatabaseProduct, IDatabaseStore, IDatabaseUser } from './type/database'
 
 const sqlite3 = verbose();
 const DBSOURCE = "db.sqlite"
@@ -29,7 +30,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 } else {
                     // Table just created, creating some rows
                     const insert = 'INSERT INTO UserData (id, email, password, role, storeId) VALUES (?,?,?,?,?)';
-                    users.map(newUser => {
+                    users.map((newUser: IDatabaseUser) => {
                         db.run(insert, [newUser.id, newUser.email, newUser.password, newUser.role, newUser.storeId]);
                     })
                     console.log(`${users.length} Users created`);
@@ -48,7 +49,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 } else {
                     // Table just created, creating some rows
                     const insert = 'INSERT INTO StoreData (id, name, uniqueStoreId) VALUES (?,?,?)';
-                    stores.map(newStore => {
+                    stores.map((newStore: IDatabaseStore) => {
                         db.run(insert, [newStore.id, newStore.name, newStore.uniqueStoreId]);
                     })
                     console.log(`${stores.length} Stores created`);
@@ -71,7 +72,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 } else {
                     // Table just created, creating some rows
                     const insert = 'INSERT INTO ProductData (id, title, description, imageUrl, storeId, price, quantity, category) VALUES (?,?,?,?,?,?,?,?)';
-                    products.map(product => {
+                    products.map((product: IDatabaseProduct) => {
                         db.run(insert, [product.id, product.title, product.description, product.imageUrl, product.storeId, product.price, product.quantity, product.category]);
                     })
                     console.log(`${products.length} Products created`);
@@ -81,15 +82,15 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 });
 
 function GetUsersAsJson() {
-    return JSON.parse(fs.readFileSync("./mockData/User_Mock_data.json"));
+    return JSON.parse(fs.readFileSync("./mockData/User_Mock_data.json").toString());
 }
 
 function GetStoresAsJson() {
-    return JSON.parse(fs.readFileSync("./mockData/Store_Mock_data.json"));
+    return JSON.parse(fs.readFileSync("./mockData/Store_Mock_data.json").toString());
 }
 
 function GetProductsAsJson() {
-    return JSON.parse(fs.readFileSync("./mockData/Products_Mock_data.json"));
+    return JSON.parse(fs.readFileSync("./mockData/Products_Mock_data.json").toString());
 }
 
 export default db;

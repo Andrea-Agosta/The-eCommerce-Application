@@ -135,3 +135,4 @@ dist
 /data/
 /.DS_store
 /.idea
+server.js
