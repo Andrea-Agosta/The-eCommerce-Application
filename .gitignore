@@ -136,3 +136,4 @@ dist
 /.DS_store
 /.idea
 server.js
+/containerConfig/psql.env

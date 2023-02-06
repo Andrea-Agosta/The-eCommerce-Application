@@ -2,8 +2,7 @@ import express from 'express';
 import { Request, Response } from 'express';
 const router = express.Router();
 import db from "../database";
-import md5 from "md5";
-
+import bcrypt from "bcrypt";
 
 router.get('/', async (_req: Request, res: Response) => {
   const sql = "select * from UserData";
@@ -47,23 +46,29 @@ router.post('/', async (req: Request, res: Response) => {
     res.status(400).json({ "error": errors.join(",") });
     return;
   }
-  const data = {
-    name: req.body.name,
-    email: req.body.email,
-    password: md5(req.body.password)
-  }
-  const sql = 'INSERT INTO user (name, email, password) VALUES (?,?,?)'
-  const params = [data.name, data.email, data.password]
-  db.run(sql, params, function (err) {
+
+  process.env.SALT && bcrypt.hash(req.body.password, process.env.SALT, function (err, hash) {
     if (err) {
-      res.status(400).json({ "error": err.message })
-      return;
+      new Error(err.message);
     }
-    res.json({
-      "message": "success",
-      "data": data,
-      "id": this.lastID
-    })
+    const data = {
+      name: req.body.name,
+      email: req.body.email,
+      password: hash
+    }
+    const sql = 'INSERT INTO user (name, email, password) VALUES (?,?,?)'
+    const params = [data.name, data.email, data.password]
+    db.run(sql, params, function (err) {
+      if (err) {
+        res.status(400).json({ "error": err.message })
+        return;
+      }
+      res.json({
+        "message": "success",
+        "data": data,
+        "id": this.lastID
+      })
+    });
   });
 })
 
