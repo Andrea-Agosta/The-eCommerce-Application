@@ -1,152 +1,122 @@
 [
   {
-    "id": 3,
-    "name": "Hansen and Sons",
-    "uniqueStoreId": 1
+    "uniqueStoreId": 1,
+    "name": "Hansen and Sons"
   },
   {
-    "id": 7,
-    "name": "Littel, Walter and Bartoletti",
-    "uniqueStoreId": 2
+    "uniqueStoreId": 2,
+    "name": "Littel, Walter and Bartoletti"
   },
   {
-    "id": 2,
-    "name": "Kassulke-Cole",
-    "uniqueStoreId": 3
+    "uniqueStoreId": 3,
+    "name": "Kassulke-Cole"
   },
   {
-    "id": 5,
-    "name": "Steuber LLC",
-    "uniqueStoreId": 4
+    "uniqueStoreId": 4,
+    "name": "Steuber LLC"
   },
   {
-    "id": 10,
-    "name": "Collier, Kassulke and Schinner",
-    "uniqueStoreId": 5
+    "uniqueStoreId": 5,
+    "name": "Collier, Kassulke and Schinner"
   },
   {
-    "id": 5,
-    "name": "Smith Group",
-    "uniqueStoreId": 6
+    "uniqueStoreId": 6,
+    "name": "Smith Group"
   },
   {
-    "id": 9,
-    "name": "Rolfson, Pollich and McDermott",
-    "uniqueStoreId": 7
+    "uniqueStoreId": 7,
+    "name": "Rolfson, Pollich and McDermott"
   },
   {
-    "id": 7,
-    "name": "Metz, Schaden and Bashirian",
-    "uniqueStoreId": 8
+    "uniqueStoreId": 8,
+    "name": "Metz, Schaden and Bashirian"
   },
   {
-    "id": 8,
-    "name": "Yundt-Russel",
-    "uniqueStoreId": 9
+    "uniqueStoreId": 9,
+    "name": "Yundt-Russel"
   },
   {
-    "id": 5,
-    "name": "Rice-Kovacek",
-    "uniqueStoreId": 10
+    "uniqueStoreId": 10,
+    "name": "Rice-Kovacek"
   },
   {
-    "id": 5,
-    "name": "Murazik, Cummings and Kuhic",
-    "uniqueStoreId": 11
+    "uniqueStoreId": 11,
+    "name": "Murazik, Cummings and Kuhic"
   },
   {
-    "id": 5,
-    "name": "Kunze and Sons",
-    "uniqueStoreId": 12
+    "uniqueStoreId": 12,
+    "name": "Kunze and Sons"
   },
   {
-    "id": 10,
-    "name": "Miller-Ullrich",
-    "uniqueStoreId": 13
+    "uniqueStoreId": 13,
+    "name": "Miller-Ullrich"
   },
   {
-    "id": 5,
-    "name": "Boehm Inc",
-    "uniqueStoreId": 14
+    "uniqueStoreId": 14,
+    "name": "Boehm Inc"
   },
   {
-    "id": 10,
-    "name": "Thiel Inc",
-    "uniqueStoreId": 15
+    "uniqueStoreId": 15,
+    "name": "Thiel Inc"
   },
   {
-    "id": 6,
-    "name": "Kunde-Farrell",
-    "uniqueStoreId": 16
+    "uniqueStoreId": 16,
+    "name": "Kunde-Farrell"
   },
   {
-    "id": 2,
-    "name": "Swaniawski-Heathcote",
-    "uniqueStoreId": 17
+    "uniqueStoreId": 17,
+    "name": "Swaniawski-Heathcote"
   },
   {
-    "id": 7,
-    "name": "Baumbach, West and Boyer",
-    "uniqueStoreId": 18
+    "uniqueStoreId": 18,
+    "name": "Baumbach, West and Boyer"
   },
   {
-    "id": 5,
-    "name": "Jones LLC",
-    "uniqueStoreId": 19
+    "uniqueStoreId": 19,
+    "name": "Jones LLC"
   },
   {
-    "id": 7,
-    "name": "Pagac and Sons",
-    "uniqueStoreId": 20
+    "uniqueStoreId": 20,
+    "name": "Pagac and Sons"
   },
   {
-    "id": 5,
-    "name": "Feest LLC",
-    "uniqueStoreId": 21
+    "uniqueStoreId": 21,
+    "name": "Feest LLC"
   },
   {
-    "id": 1,
-    "name": "Kirlin, Tromp and Wuckert",
-    "uniqueStoreId": 22
+    "uniqueStoreId": 22,
+    "name": "Kirlin, Tromp and Wuckert"
   },
   {
-    "id": 3,
-    "name": "Huels, Stokes and Jakubowski",
-    "uniqueStoreId": 23
+    "uniqueStoreId": 23,
+    "name": "Huels, Stokes and Jakubowski"
   },
   {
-    "id": 8,
-    "name": "Considine-Harvey",
-    "uniqueStoreId": 24
+    "uniqueStoreId": 24,
+    "name": "Considine-Harvey"
   },
   {
-    "id": 5,
-    "name": "Jakubowski-Cremin",
-    "uniqueStoreId": 25
+    "uniqueStoreId": 25,
+    "name": "Jakubowski-Cremin"
   },
   {
-    "id": 4,
-    "name": "Schmitt-Renner",
-    "uniqueStoreId": 26
+    "uniqueStoreId": 26,
+    "name": "Schmitt-Renner"
   },
   {
-    "id": 2,
-    "name": "Cruickshank, Spinka and Barrows",
-    "uniqueStoreId": 27
+    "uniqueStoreId": 27,
+    "name": "Cruickshank, Spinka and Barrows"
   },
   {
-    "id": 3,
-    "name": "Ullrich and Sons",
-    "uniqueStoreId": 28
+    "uniqueStoreId": 28,
+    "name": "Ullrich and Sons"
   },
   {
-    "id": 5,
-    "name": "Johns-Bogan",
-    "uniqueStoreId": 29
+    "uniqueStoreId": 29,
+    "name": "Johns-Bogan"
   },
   {
-    "id": 1,
-    "name": "Koss-Heller",
-    "uniqueStoreId": 30
+    "uniqueStoreId": 30,
+    "name": "Koss-Heller"
   }
 ]
