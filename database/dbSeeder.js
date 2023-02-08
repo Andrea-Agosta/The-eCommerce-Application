@@ -11,7 +11,7 @@ const pool = new Pool({
   host: 'localhost',
   database: 'postgres',
   port: 5432,
-  max: 50,
+  max: 10,
   idleTimeoutMillis: 5000,
   connectionTimeoutMillis: 5000,
   user: process.env.POSTGRES_USER,
@@ -30,23 +30,25 @@ const connectToDB = async (query) => {
 }
 
 const dbSeeder = async () => {
-  await User_Mock_data.forEach(async user => {
-    const salt = bcrypt.genSaltSync(Number(process.env.SALT));
-    const hash = bcrypt.hashSync(user.password, salt);
-    const query = `INSERT INTO userdata (id, email, password, role, storeId) VALUES ('${user.id}','${user.email}','${hash}','${user.role}','${user.uniqueStoreId}')`;
-    return await connectToDB(query);
-  });
-
   await Store_Mock_data.forEach(async store => {
-    const query = `INSERT INTO storedata (name, uniqueStoreId) VALUES ('${store.name}','${store.uniqueStoreId}')`;
+    const query = `INSERT INTO storedata (uniqueStoreId, name) VALUES (${store.uniqueStoreId},'${store.name}')`;
     return await connectToDB(query);
   });
 
   await Products_Mock_data.forEach(async product => {
     const query = `
       INSERT INTO productdata (id, title, description, imageUrl, storeId, price, quantity, category ) 
-      VALUES ('${product.id}','${product.title}','${product.description}', '${product.imageUrl}', '${product.storeId}' ,'${product.price}', '${product.quantity}', '${product.category}')
+      VALUES (${product.id},'${product.title}','${product.description}', '${product.imageUrl}', ${product.storeId} ,'${product.price}', ${product.quantity}, '${product.category}')
     `;
+    return await connectToDB(query);
+  });
+
+  await User_Mock_data.forEach(async user => {
+    const salt = bcrypt.genSaltSync(Number(process.env.SALT));
+    const hash = bcrypt.hashSync(user.password, salt);
+    const store = Store_Mock_data.find(store => store.uniqueStoreId === user.uniqueStoreId);
+    const storeId = store ? store.uniqueStoreId : null;
+    const query = `INSERT INTO userdata (id, email, password, role, storeId) VALUES (${user.id},'${user.email}','${hash}','${user.role}',${storeId})`;
     return await connectToDB(query);
   });
 };

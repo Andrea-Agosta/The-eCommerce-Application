@@ -6,6 +6,7 @@ export interface IBodyUserLogin {
 export interface IBodyUser extends IBodyUserLogin {
   role: string;
   storeId: number;
+  storeName: string;
 }
 
 export interface IUser extends IBodyUser {
