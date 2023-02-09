@@ -4,10 +4,9 @@ import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
 
 passport.use('signup', new localStrategy({ usernameField: 'email', passwordField: 'password' }, async (email: string, password: string, done: CallableFunction) => {
   try {
-    // const user = await UserModel.create({ email, password });
+    const user = await UserModel.create({ email, password });
     console.log(email, password, 'userData');
-
-    // return done(null, user);
+    return done(null, user);
   } catch (error) {
     done(error);
   }
@@ -15,7 +14,7 @@ passport.use('signup', new localStrategy({ usernameField: 'email', passwordField
 
 
 
-passport.use('login', new localStrategy({ usernameField: 'email', passwordField: 'password' }, async (email: string, password: string, done: CallableFunction) => {
+passport.use('login', new localStrategy({ usernameField: 'email', passwordField: 'password' }, async (req, email: string, password: string, done: CallableFunction) => {
   try {
     // const user = await UserModel.findOne({ email });
 
