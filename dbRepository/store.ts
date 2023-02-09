@@ -16,3 +16,9 @@ export const getStoreByName = async (name: string): Promise<IStore> => {
   const query: string = `select * from StoreData WHERE name = '${name}'`;
   return await connectionDB(query);
 }
+
+export const updateStoreByName = async (name: string): Promise<string> => {
+  const query: string = `UPDATE StoreData SET name = '${name}'`;
+  await connectionDB(query);
+  return await 'Store Name Update';
+}

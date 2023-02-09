@@ -9,6 +9,10 @@ export interface IBodyUser extends IBodyUserLogin {
   storeName: string;
 }
 
+export interface IUpdateBodyUser extends IBodyUser {
+  storeName: string;
+}
+
 export interface IUser extends IBodyUser {
   id: number;
 }

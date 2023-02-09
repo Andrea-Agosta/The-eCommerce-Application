@@ -7,14 +7,11 @@ import { createAdminUser, createUser, getUserByEmail } from '../dbRepository/use
 
 const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-
 passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, async (req, email: string, password: string, done: CallableFunction) => {
   try {
     if (emailRegex.test(email) && password && req.body.role) {
       const salt = bcrypt.genSaltSync(Number(process.env.SALT));
       const hashPassword = bcrypt.hashSync(password, salt);
-
-      // todo: ADD CHECK TO EMAIL IF IS ALREADY REGISTERED
 
       if (req.body.role === 'admin') {
         if (req.body.storeName) {

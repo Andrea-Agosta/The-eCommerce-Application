@@ -1,31 +1,28 @@
-// import { getUserByEmail } from '../dbRepository/user';
-// import { Request } from 'express';
-// import { IBodyUser, IBodyUserLogin } from '../type/user';
-// import { addStore } from '../dbRepository/store';
-// const bcrypt = require("bcrypt");
-// const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+import { deleteUser, getUserByID, getUsers, updateUser } from '../dbRepository/user';
+import { Request } from 'express';
+import { IBodyUser, IUser } from '../type/user';
+import { updateStoreByName } from '../dbRepository/store';
 
+const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-// export const registerUser = async (req: Request<{}, {}, IBodyUser>): Promise<string> => {
-//   if (emailRegex.test(req.body.email) && req.body.password && req.body.role) {
-//     const salt = bcrypt.genSaltSync(Number(process.env.SALT));
-//     const hashPassword = bcrypt.hashSync(req.body.password, salt);
-//     if (req.body.storeName || req.body.storeId) {
-//       if (req.body.storeName && !req.body.storeId) {
-//         addStore(storeIdCount, req.body.storeName);
-//         return createAdminUser(id, req.body.email, hashPassword, req.body.role, storeIdCount);
-//       }
-//       return createAdminUser(id, req.body.email, hashPassword, req.body.role, req.body.storeId);
-//     }
-//     return createUser(id, req.body.email, hashPassword, req.body.role);
-//   }
-//   throw new Error('Bad request');
-// };
+export const getAllUsers = async (): Promise<IUser[]> => {
+  return await getUsers();
+};
 
-// export const loginUser = async (req: Request<{}, {}, IBodyUserLogin>): Promise<boolean> => {
-//   if (emailRegex.test(req.body.email) && req.body.password) {
-//     const user: IBodyUser[] = await getUserByEmail(req.body.email);
-//     return bcrypt.compareSync(req.body.password, user[0]?.password);
-//   }
-//   throw new Error('Bad request');
-// };
+export const getUserById = async (id: number): Promise<IUser> => {
+  if (id) return await getUserByID(id);
+  throw new Error(`User ${id} does not exist`);
+}
+
+export const updateUserById = async (req: Request<{}, {}, IBodyUser>): Promise<string> => {
+  let query: string = 'UPDATE users SET';
+  req.body.email && emailRegex.test(req.body.email) && (query += `email = '${req.body.email}', `);
+  req.body.password && (query += `password = '${req.body.password}', `);
+  req.body.role && (query += `role = '${req.body.role}', `);
+  req.body.storeName && updateStoreByName(req.body.storeName);
+  return await updateUser(query);
+};
+
+export const deleteUserById = async (id: number): Promise<string> => {
+  return await deleteUser(id);
+};
