@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getAllStores } from '../controller/store';
+import { getAllStores } from '../controller/storeController';
 import { IStore } from '../type/store';
 const router = express.Router();
 

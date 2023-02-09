@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { IBodyUser } from '../type/user';
 const router = express.Router();
-import '../controller/auth';
+import '../controller/authController';
 
 
 

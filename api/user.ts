@@ -1,4 +1,4 @@
-import { deleteUserById, getAllUsers, getUserById, updateUserById } from '../controller/user';
+import { deleteUserById, getAllUsers, getUserById, updateUserById } from '../controller/userController';
 import express, { Request, Response } from 'express';
 import { IUser } from '../type/user';
 const router = express.Router();

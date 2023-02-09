@@ -1,7 +1,7 @@
-import { deleteUser, getUserByID, getUsers, updateUser } from '../dbRepository/user';
+import { deleteUser, getUserByID, getUsers, updateUser } from '../dbRepository/userRepository';
 import { Request } from 'express';
 import { IBodyUser, IUser } from '../type/user';
-import { updateStoreByName } from '../dbRepository/store';
+import { updateStoreByName } from '../dbRepository/storeRepository';
 
 const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 

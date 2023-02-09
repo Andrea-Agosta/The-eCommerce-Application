@@ -1,4 +1,4 @@
-import { getProductByID, getProducts } from "../dbRepository/product";
+import { getProductByID, getProducts } from "../dbRepository/productRepository";
 import { IProduct } from "../type/product";
 
 export const getAllProducts = async (): Promise<IProduct[]> => {

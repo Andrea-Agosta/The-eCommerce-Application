@@ -1,8 +1,8 @@
-import { getAllProducts } from '../controller/product';
+import { getAllProducts } from '../controller/productController';
 import express from 'express';
 import { Request, Response } from 'express';
 import { IProduct } from 'type/product';
-import { getProductByID } from '../dbRepository/product';
+import { getProductByID } from '../dbRepository/productRepository';
 const router = express.Router();
 
 

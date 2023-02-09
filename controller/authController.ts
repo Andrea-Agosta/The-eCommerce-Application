@@ -2,8 +2,8 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
 import bcrypt from "bcrypt";
-import { addStore } from '../dbRepository/store';
-import { createAdminUser, createUser, getUserByEmail } from '../dbRepository/user';
+import { addStore } from '../dbRepository/storeRepository';
+import { createAdminUser, createUser, getUserByEmail } from '../dbRepository/userRepository';
 
 const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
