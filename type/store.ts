@@ -1,4 +1,4 @@
-export interface IDatabaseStore {
+export interface IStore {
   name: string;
   uniqueStoreId: number;
 }

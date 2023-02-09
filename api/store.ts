@@ -1,22 +1,16 @@
-import express from 'express';
-import { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
+import { getAllStores } from 'controller/store';
+import { IStore } from '../type/store';
 const router = express.Router();
-import db from "../database";
 
 
 router.get('/', async (_req: Request, res: Response) => {
-  const sql = "select * from StoreData";
-  const params: string[] = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ "error": err.message });
-      return;
-    }
-    res.json({
-      "message": "success",
-      "data": rows
-    })
-  });
+  try {
+    const store: IStore[] = await getAllStores();
+    res.status(200).json(store);
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
 });
 
 export default router;
