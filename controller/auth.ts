@@ -1,0 +1,61 @@
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
+import bcrypt from "bcrypt";
+import { addStore } from '../dbRepository/store';
+import { createAdminUser, createUser, getUserByEmail } from '../dbRepository/user';
+
+const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+
+
+passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, async (req, email: string, password: string, done: CallableFunction) => {
+  try {
+    if (emailRegex.test(email) && password && req.body.role) {
+      const salt = bcrypt.genSaltSync(Number(process.env.SALT));
+      const hashPassword = bcrypt.hashSync(password, salt);
+
+      // todo: ADD CHECK TO EMAIL IF IS ALREADY REGISTERED
+
+      if (req.body.role === 'admin') {
+        if (req.body.storeName) {
+          const store = await addStore(req.body.storeName);
+          const user = await createAdminUser(email, hashPassword, req.body.role, store.uniqueStoreId);
+          return done(null, user);
+        }
+        throw new Error('Bad request');
+      }
+      const user = createUser(email, hashPassword, req.body.role);
+      return done(null, user);
+    }
+    throw new Error('Bad request');
+  } catch (error) {
+    done(error);
+  }
+}));
+
+passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, async (email: string, password: string, done: CallableFunction) => {
+  try {
+    const user = await getUserByEmail(email);
+
+    if (!user) {
+      return done(null, false, { message: 'User not found' });
+    }
+    const validate: boolean = bcrypt.compareSync(password, user.password);
+
+    if (!validate) {
+      return done(null, false, { message: 'Wrong Password' });
+    }
+
+    return done(null, user, { message: 'Logged in Successfully' });
+  } catch (error) {
+    return done(error);
+  }
+}));
+
+passport.use(new JWTstrategy({ secretOrKey: 'TOP_SECRET', jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token') }, async (token, done) => {
+  try {
+    return done(null, token.user);
+  } catch (error) {
+    done(error);
+  }
+}));

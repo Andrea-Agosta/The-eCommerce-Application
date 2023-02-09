@@ -31,14 +31,14 @@ const connectToDB = async (query) => {
 
 const dbSeeder = async () => {
   await Store_Mock_data.forEach(async store => {
-    const query = `INSERT INTO storedata (uniqueStoreId, name) VALUES (${store.uniqueStoreId},'${store.name}')`;
+    const query = `INSERT INTO storedata (name) VALUES ('${store.name}')`;
     return await connectToDB(query);
   });
 
   await Products_Mock_data.forEach(async product => {
     const query = `
-      INSERT INTO productdata (id, title, description, imageUrl, storeId, price, quantity, category ) 
-      VALUES (${product.id},'${product.title}','${product.description}', '${product.imageUrl}', ${product.storeId} ,'${product.price}', ${product.quantity}, '${product.category}')
+      INSERT INTO productdata (title, description, imageUrl, storeId, price, quantity, category ) 
+      VALUES ('${product.title}','${product.description}', '${product.imageUrl}', ${product.storeId} ,'${product.price}', ${product.quantity}, '${product.category}')
     `;
     return await connectToDB(query);
   });
@@ -48,7 +48,7 @@ const dbSeeder = async () => {
     const hash = bcrypt.hashSync(user.password, salt);
     const store = Store_Mock_data.find(store => store.uniqueStoreId === user.uniqueStoreId);
     const storeId = store ? store.uniqueStoreId : null;
-    const query = `INSERT INTO userdata (id, email, password, role, storeId) VALUES (${user.id},'${user.email}','${hash}','${user.role}',${storeId})`;
+    const query = `INSERT INTO userdata (email, password, role, storeId) VALUES ('${user.email}','${hash}','${user.role}',${storeId})`;
     return await connectToDB(query);
   });
 };

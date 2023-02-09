@@ -1,9 +1,13 @@
-import express from 'express';
 import passport from 'passport';
+import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { IBodyUser } from '../type/user';
 const router = express.Router();
+import '../controller/auth';
 
-router.post('/signup', passport.authenticate('signup', { session: false }), async (req, res) => {
+
+
+router.post('/signup', passport.authenticate('signup', { session: false }), async (req: Request<{}, {}, IBodyUser>, res: Response) => {
   res.json({
     message: 'Signup successful',
     user: req.user
