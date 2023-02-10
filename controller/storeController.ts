@@ -1,3 +1,4 @@
+import { deleteProductFromStore } from "dbRepository/productRepository";
 import { getStores, getStoreByID, deleteStore } from "../dbRepository/storeRepository";
 import { IStore } from "../type/store";
 
@@ -11,5 +12,6 @@ export const getStoreById = async (id: number): Promise<IStore> => {
 }
 
 export const deleteStoreById = async (id: number): Promise<string> => {
+  await deleteProductFromStore(id);
   return await deleteStore(id);
 };

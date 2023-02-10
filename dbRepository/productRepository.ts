@@ -21,3 +21,9 @@ export const deleteProduct = async (id: number): Promise<string> => {
   await connectionDB(query);
   return await 'Product deleted;'
 }
+
+export const deleteProductFromStore = async (id: number): Promise<string> => {
+  const query: string = `DELETE FROM ProductData WHERE storeId = '${id}'`;
+  await connectionDB(query);
+  return await 'Product deleted;'
+}
