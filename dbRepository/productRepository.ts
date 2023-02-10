@@ -10,3 +10,14 @@ export const getProductByID = async (id: number): Promise<IProduct[]> => {
   const query: string = `select * from ProductData where id = '${id}'`;
   return await connectionDB(query);
 };
+
+export const updateProduct = async (query: string): Promise<string> => {
+  await connectionDB(query);
+  return 'Product successfully updated';
+};
+
+export const deleteProduct = async (id: number): Promise<string> => {
+  const query: string = `DELETE FROM ProductData WHERE id = '${id}'`;
+  await connectionDB(query);
+  return await 'Product deleted;'
+}
