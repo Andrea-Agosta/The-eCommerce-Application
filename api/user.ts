@@ -1,6 +1,6 @@
 import { deleteUserById, getAllUsers, getUserById, updateUserById } from '../controller/userController';
 import express, { Request, Response } from 'express';
-import { IUser } from '../type/user';
+import { IBodyUser, IUser } from '../type/user';
 const router = express.Router();
 
 
@@ -22,7 +22,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.patch('/:id', async (req: Request, res: Response) => {
+router.patch('/:id', async (req: Request<{ id: number }, {}, IBodyUser>, res: Response) => {
   try {
     const user: string = await updateUserById(req);
     res.status(200).send(user);

@@ -8,3 +8,7 @@ export interface IProduct {
   quantity: number;
   category: string;
 }
+
+export interface IProductUpdate extends IProduct {
+  role: string;
+}
