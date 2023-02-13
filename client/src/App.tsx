@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from 'react';
+import { useState } from 'react';
 
 import {
     BrowserRouter as Router,
@@ -7,9 +7,9 @@ import {
     Route,
 } from 'react-router-dom';
 
-import {fakeProducts} from './fakedata/Fakedata.js';
-import {fakecart} from './fakedata/fakecart.js';
-import NavBar from './components/Navbar.jsx';
+import { fakeProducts } from './fakedata/Fakedata.js';
+import { fakecart } from './fakedata/fakecart.js';
+import NavBar from './components/Navbar.tsx';
 import Cart from './components/checkout/Cart.jsx';
 import AdminPage from "./admin/AdminPage.jsx";
 import ProfileBar from "./components/ProfileBar.jsx";
@@ -17,13 +17,14 @@ import ProductList from './components/Products/ProductList.jsx';
 import LoginForm from './components/login/LoginForm.jsx';
 import NewUserForm from './components/login/NewUserForm.jsx';
 import SuperAdminPage from "./admin/SuperAdminPage.jsx";
+import { Footer } from './components/Footer';
 
-function addToCart(productId) {
+function addToCart(productId: string) {
     console.log("Add " + productId + " From the App")
     //add item to the current Cart
 }
 
-function removeFromCart(productId) {
+function removeFromCart(productId: string) {
     console.log("Remove " + productId + " From the App")
     //remove item from the current Cart
 }
@@ -40,19 +41,20 @@ function App() {
         <div className="App">
             <Router>
                 <header className={"top_header"}>
-                    <ProfileBar/>
-                    <NavBar/>
+                    <ProfileBar />
+                    <NavBar />
                 </header>
                 <Routes>
-                    <Route exact path='/create-new-user' element={< NewUserForm/>}></Route>
-                    <Route exact path='/login' element={< LoginForm/>}></Route>
-                    <Route exact path='/'
-                           element={< ProductList products={fakeProducts} addToCart={addToCart}/>}></Route>
-                    <Route exact path='/cart'
-                           element={< Cart products={currentCart} removeFromCart={removeFromCart}/>}></Route>
-                    <Route exact path='/admin' element={< AdminPage/>}></Route>
-                    <Route exact path='/admin/super' element={< SuperAdminPage/>}></Route>
+                    <Route path='/create-new-user' element={< NewUserForm />}></Route>
+                    <Route path='/login' element={< LoginForm />}></Route>
+                    <Route path='/'
+                        element={< ProductList products={fakeProducts} addToCart={addToCart} />}></Route>
+                    <Route path='/cart'
+                        element={< Cart products={currentCart} removeFromCart={removeFromCart} />}></Route>
+                    <Route path='/admin' element={< AdminPage />}></Route>
+                    <Route path='/admin/super' element={< SuperAdminPage />}></Route>
                 </Routes>
+                <Footer />
             </Router>
         </div>
     )
