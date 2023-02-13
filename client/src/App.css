@@ -16,9 +16,7 @@
     width: 98%;
 }
 
-.navbar {
-
-}
+.navbar {}
 
 .product_list {
     margin: auto;
@@ -28,11 +26,9 @@
     margin: auto;
 }
 
-.categorySorter{
+.categorySorter {
     height: 50px;
     margin: auto;
     border-style: solid;
     border-color: #242424;
 }
-
-

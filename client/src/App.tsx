@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { useState } from 'react';
 
 import {
@@ -9,13 +9,13 @@ import {
 
 import { fakeProducts } from './fakedata/Fakedata.js';
 import { fakecart } from './fakedata/fakecart.js';
-import NavBar from './components/Navbar.tsx';
+import NavBar from './components/Navbar';
 import Cart from './components/checkout/Cart.jsx';
 import AdminPage from "./admin/AdminPage.jsx";
 import ProfileBar from "./components/ProfileBar.jsx";
 import ProductList from './components/Products/ProductList.jsx';
-import LoginForm from './components/login/LoginForm.jsx';
-import NewUserForm from './components/login/NewUserForm.jsx';
+import LoginForm from './components/auth/LoginForm.js';
+import NewUserForm from './components/auth/RegistrationForm.js';
 import SuperAdminPage from "./admin/SuperAdminPage.jsx";
 import { Footer } from './components/Footer';
 
@@ -40,10 +40,10 @@ function App() {
     return (
         <div className="App">
             <Router>
-                <header className={"top_header"}>
-                    <ProfileBar />
-                    <NavBar />
-                </header>
+                <NavBar />
+                {/* <header className={"top_header"}> */}
+                {/* <ProfileBar /> */}
+                {/* </header> */}
                 <Routes>
                     <Route path='/create-new-user' element={< NewUserForm />}></Route>
                     <Route path='/login' element={< LoginForm />}></Route>
