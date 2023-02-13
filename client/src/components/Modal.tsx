@@ -40,7 +40,7 @@ export const Modal = () => {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 overflow-y-auto w-full">
-            <div className={`${registration ? 'flex min-h-[50%]' : 'flex min-h-[80%]'} lg:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 w-full`}>
+            <div className={`${registration ? 'flex min-h-[90%]' : 'flex min-h-[80%]'} lg:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 w-full`}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
