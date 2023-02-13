@@ -14,13 +14,13 @@ export const Modal = () => {
   return (
     <>
       <button
-        className="p-3 p-lg-1 px-3 bg-white text-gray-700 hover:text-orange-400 text:xl w-11/12 my-5 mx-3 lg:my-0 border-2 rounded-lg border-gray-700 hover:border-orange-400 lg:border-none"
+        className="p-3 p-lg-1 px-3 bg-white text-gray-700 hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-gray-700 hover:border-orange-400 md:border-none"
         onClick={() => setOpen(!open)}
       >
         <span className="flex">
-          <PersonCircle className='text-4xl mt-0 lg:mt-1 mr-4 lg:mr-2' />
-          <div className='flex flex-row md:flex-col text-left mt-1 lg:mt-0'>Sign up
-            <span className='ml-2 lg:ml-0'>or Log In</span>
+          <PersonCircle className='text-4xl mt-0 md:mt-1 mr-4 md:mr-2' />
+          <div className='flex flex-row md:flex-col text-left mt-1 md:mt-0'>Sign up
+            <span className='ml-2 md:ml-0'>or Log In</span>
           </div>
         </span>
       </button>
@@ -40,7 +40,7 @@ export const Modal = () => {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 overflow-y-auto w-full">
-            <div className="flex min-h-[70%] lg:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 w-full">
+            <div className={`${registration ? 'flex min-h-[50%]' : 'flex min-h-[80%]'} lg:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 w-full`}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -51,7 +51,7 @@ export const Modal = () => {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-lg">
-                  <div className="bg-white pt-5 sm:p-6 sm:pb-4 mb-10 pb-0">
+                  <div className="bg-white pt-5 sm:p-6 sm:pb-4 px-2 pb-0">
                     <div className='flex flex-row'>
                       <button
                         className={`bg-white  hover:text-orange-400 text:xl w-full py-2 ${registration ? 'text-gray-700 border-b' : 'border border-b-0 rounded-t-lg text-orange-400'}`}

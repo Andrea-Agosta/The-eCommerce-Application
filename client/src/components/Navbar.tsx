@@ -30,10 +30,10 @@ function NavBar() {
                 <Dropdown />
               </div>
               <Search className='text-3xl pt-2 ml-3 text-[#757575]' />
-              <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required />
+              <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required />
             </div>
           </form>
-          <div className="items-center hidden lg:block">
+          <div className="items-center hidden md:block">
             <Modal />
           </div>
         </div>
@@ -41,9 +41,9 @@ function NavBar() {
       </nav >
       <nav className={`border ${isClicked}`} >
         <div className="max-w-screen-xl px-4 py-3 mx-auto md:px-6" >
-          <div className="flex flex-col lg:flex-row lg:items-center">
-            <span className='block lg:hidden'><Modal /></span>
-            <ul className="flex flex-col lg:flex-row mt-0 mr-lg-6 lg:space-x-8 space-y-3 text-sm font-medium">
+          <div className="flex flex-col md:flex-row md:items-center">
+            <span className='block md:hidden'><Modal /></span>
+            <ul className="flex flex-col md:flex-row mt-0 mr-lg-6 md:space-x-8 space-y-3 text-sm font-medium">
               <li>
                 <a href="/" className="text-gray-900 hover:underline items-start">Home</a>
               </li>
