@@ -1,9 +1,13 @@
-import { deleteProduct, getProductByID, getProducts, updateProduct } from "../dbRepository/productRepository";
+import { deleteProduct, getCategories, getProductByID, getProducts, updateProduct } from "../dbRepository/productRepository";
 import { IProduct, IProductUpdate } from "../type/product";
 import { Request } from 'express';
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
   return await getProducts();
+};
+
+export const getAllProductsCategories = async (): Promise<IProduct[]> => {
+  return await getCategories();
 };
 
 export const getProductById = async (id: number): Promise<IProduct[]> => {

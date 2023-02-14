@@ -6,6 +6,11 @@ export const getProducts = async (): Promise<IProduct[]> => {
   return await connectionDB(query);
 };
 
+export const getCategories = async (): Promise<IProduct[]> => {
+  const query: string = "SELECT DISTINCT(category) from ProductData;";
+  return await connectionDB(query);
+};
+
 export const getProductByID = async (id: number): Promise<IProduct[]> => {
   const query: string = `select * from ProductData where id = '${id}'`;
   return await connectionDB(query);
