@@ -1,4 +1,4 @@
-import { deleteProductFromStore } from "dbRepository/productRepository";
+import { deleteProductFromStore } from "../dbRepository/productRepository";
 import { getStores, getStoreByID, deleteStore } from "../dbRepository/storeRepository";
 import { IStore } from "../type/store";
 

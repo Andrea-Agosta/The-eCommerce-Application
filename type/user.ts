@@ -16,3 +16,7 @@ export interface IUpdateBodyUser extends IBodyUser {
 export interface IUser extends IBodyUser {
   id: number;
 }
+
+export interface IRegistrationUser extends IUser {
+  confirmed_password: string;
+}

@@ -12,23 +12,23 @@ function NewUserForm({ handleChangeRegistration }: IRegistrationState) {
   return (
     <div className="flex flex-col p-3">
       <label htmlFor="email_input">Email:</label>
-      <input className={inputStyle} placeholder={"email"} id={"email_input"} onChange={handleChangeRegistration} />
+      <input className={inputStyle} placeholder={"email"} id={"email"} onChange={handleChangeRegistration} />
       <p className={errorStyle}>*please insert value</p>
       <label htmlFor="password_input">Password:</label>
-      <input className={inputStyle} placeholder={"password"} id={"password_input"} onChange={handleChangeRegistration} />
+      <input className={inputStyle} placeholder={"password"} id={"password"} onChange={handleChangeRegistration} />
       <p className={errorStyle}>*please insert value</p>
       <label htmlFor="confirmed_password_input">Confirm password:</label>
-      <input className={inputStyle} placeholder={"confirm password"} id={"confirmed_password_input"} onChange={handleChangeRegistration} />
+      <input className={inputStyle} placeholder={"confirm password"} id={"confirmed_password"} onChange={handleChangeRegistration} />
       <p className={errorStyle}>*please insert value</p>
       <label htmlFor="type_input">Type of User:</label>
-      <select className={inputStyle} placeholder={"user"} id={"type_input"} onChange={(e) => { setRole(e.currentTarget.value), handleChangeRegistration(e) }}>
+      <select className={inputStyle} placeholder={"user"} id={"role"} onChange={(e) => { setRole(e.currentTarget.value), handleChangeRegistration(e) }}>
         <option value={"user"}>User</option>
         <option value={"admin"}>Admin</option>
       </select>
       {
         role === 'admin' && <>
           <label htmlFor="storeName">Store Name:</label>
-          <input className={inputStyle} placeholder={"Name Store"} id={"storeName_input"} onChange={handleChangeRegistration} />
+          <input className={inputStyle} placeholder={"Name Store"} id={"storeName"} onChange={handleChangeRegistration} />
           <p className={errorStyle}>*please insert value</p>
         </>
       }
