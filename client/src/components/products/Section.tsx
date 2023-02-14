@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Card from './components/Card';
-import { ProductContext } from '../context/product';
+// import Card from './components/Card';
+import { ProductContext } from '../../context/product';
 
 const Section = ({ category }: { category: string }) => {
   const { products } = useContext(ProductContext);

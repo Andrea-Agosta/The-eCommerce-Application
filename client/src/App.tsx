@@ -18,6 +18,7 @@ import LoginForm from './components/auth/LoginForm.js';
 import NewUserForm from './components/auth/RegistrationForm.js';
 import SuperAdminPage from "./admin/SuperAdminPage.jsx";
 import { Footer } from './components/Footer';
+import Home from './pages/Home.js';
 
 function addToCart(productId: string) {
     console.log("Add " + productId + " From the App")
@@ -45,10 +46,11 @@ function App() {
                 {/* <ProfileBar /> */}
                 {/* </header> */}
                 <Routes>
-                    <Route path='/create-new-user' element={< NewUserForm />}></Route>
-                    <Route path='/login' element={< LoginForm />}></Route>
+                    {/* <Route path='/create-new-user' element={<NewUserForm />}></Route>
+                    <Route path='/login' element={<LoginForm />}></Route> */}
                     <Route path='/'
-                        element={< ProductList products={fakeProducts} addToCart={addToCart} />}></Route>
+                        // element={<ProductList products={fakeProducts} addToCart={addToCart} />}></Route>
+                        element={<Home />}></Route>
                     <Route path='/cart'
                         element={< Cart products={currentCart} removeFromCart={removeFromCart} />}></Route>
                     <Route path='/admin' element={< AdminPage />}></Route>
