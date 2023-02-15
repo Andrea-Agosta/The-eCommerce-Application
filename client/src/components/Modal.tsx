@@ -82,25 +82,24 @@ export const Modal = () => {
     !login.password && setError(prev => ({ ...prev, password: "Password" }));
     !emailRegex.test(registration.email) && setError(prev => ({ ...prev, email: "Email" }));
     !registration.password && setError(prev => ({ ...prev, password: "Password" }));
-    !registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: " Confirme your Password" }));
+    !registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: "Please confirm your Password" }));
     registration.password !== registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: "Password are be the same" }));
-    (registration.role === 'Admin' && !registration.storeName) && setError(prev => ({ ...prev, storeName: "The name of the store can't be Empity" }));
+    (registration.role === 'admin' && !registration.storeName) && setError(prev => ({ ...prev, storeName: "The name of the store can't be Empity" }));
   };
 
   return (
     <>
       <button
-        className="p-3 p-lg-1 px-3 bg-white text-gray-700 hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-orange-400 md:border-gray-700 hover:border-orange-400 md:border-none"
+        className="p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none"
         onClick={() => setOpen(!open)}
       >
         <span className="flex">
-          <PersonCircle className='text-4xl mt-0 md:mt-1 mr-4 md:mr-2 text-orange-400 hover:text-orange-600 md:text-gray-700' />
+          <PersonCircle className='text-4xl mt-0 md:mt-1 mr-4 md:mr-2 text-orange-400 md:text-gray-700 hover:text-orange-400' />
           <div className='flex flex-row md:flex-col text-left mt-1 md:mt-0'>Sign up
             <span className='ml-2 md:ml-0'>or Log In</span>
           </div>
         </span>
       </button>
-
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
           <Transition.Child

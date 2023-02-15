@@ -21,7 +21,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     if (req.body.role === 'user') {
       return res.status(403).send({ message: 'Forbidden access' });
     }
-    const store: IStore = await getStoreById(Number(req.params.id));
+    const store: IStore[] = await getStoreById(Number(req.params.id));
     return res.status(200).json(store);
   } catch (err) {
     return res.status(400).send({ message: err.message });

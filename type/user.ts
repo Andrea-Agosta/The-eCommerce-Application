@@ -19,4 +19,5 @@ export interface IUser extends IBodyUser {
 
 export interface IRegistrationUser extends IUser {
   confirmed_password: string;
+  userNotFound: string
 }

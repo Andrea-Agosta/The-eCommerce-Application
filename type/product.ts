@@ -12,3 +12,9 @@ export interface IProduct {
 export interface IProductUpdate extends IProduct {
   role: string;
 }
+
+export interface ICategory {
+  category: {
+    category: string;
+  }
+}

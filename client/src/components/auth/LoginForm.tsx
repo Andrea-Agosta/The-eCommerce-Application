@@ -14,7 +14,7 @@ function LoginForm({ handleChangeLogin, error }: ILoginState) {
       <input placeholder={"email"} id="email" type="email" className={inputStyle} onChange={handleChangeLogin} />
       {error.email && <p className="text-red-500 text-xs mb-4">*please insert correct {error.email} </p>}
       <label htmlFor="password">Password:</label>
-      <input placeholder={"password"} id="password" className={inputStyle} onChange={handleChangeLogin} />
+      <input placeholder={"password"} id="password" type='password' className={inputStyle} onChange={handleChangeLogin} />
       {error.password && <p className="text-red-500 text-xs">*please insert correct {error.password} </p>}
     </div>
   )

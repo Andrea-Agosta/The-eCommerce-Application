@@ -9,7 +9,7 @@ export const getAllUsers = async (): Promise<IUser[]> => {
   return await getUsers();
 };
 
-export const getUserById = async (id: number): Promise<IUser> => {
+export const getUserById = async (id: number): Promise<IUser[]> => {
   if (id) return await getUserByID(id);
   throw new Error(`User ${id} does not exist`);
 }

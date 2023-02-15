@@ -6,12 +6,12 @@ export const getUsers = async (): Promise<IUser[]> => {
   return await connectionDB(query);
 };
 
-export const getUserByID = async (id: number): Promise<IUser> => {
+export const getUserByID = async (id: number): Promise<IUser[]> => {
   const query: string = `SELECT * FROM UserData WHERE id = '${id}'`;
   return await connectionDB(query);
 };
 
-export const getUserByEmail = async (email: string): Promise<IUser> => {
+export const getUserByEmail = async (email: string): Promise<IUser[]> => {
   const query: string = `SELECT * FROM UserData WHERE email = '${email}'`;
   return await connectionDB(query);
 };

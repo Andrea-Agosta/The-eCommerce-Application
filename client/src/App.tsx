@@ -19,6 +19,8 @@ import NewUserForm from './components/auth/RegistrationForm.js';
 import SuperAdminPage from "./admin/SuperAdminPage.jsx";
 import { Footer } from './components/Footer';
 import Home from './pages/Home.js';
+import { ProductContestProvider } from './context/product.js';
+import { CategoriesContestProvider } from './context/categories.js';
 
 function addToCart(productId: string) {
     console.log("Add " + productId + " From the App")
@@ -42,20 +44,23 @@ function App() {
         <div className="App">
             <Router>
                 <NavBar />
-                {/* <header className={"top_header"}> */}
-                {/* <ProfileBar /> */}
-                {/* </header> */}
-                <Routes>
-                    {/* <Route path='/create-new-user' element={<NewUserForm />}></Route>
+                <div className="min-h-screen">
+                    <ProductContestProvider>
+                        <CategoriesContestProvider>
+                            <Routes>
+                                {/* <Route path='/create-new-user' element={<NewUserForm />}></Route>
                     <Route path='/login' element={<LoginForm />}></Route> */}
-                    <Route path='/'
-                        // element={<ProductList products={fakeProducts} addToCart={addToCart} />}></Route>
-                        element={<Home />}></Route>
-                    <Route path='/cart'
-                        element={< Cart products={currentCart} removeFromCart={removeFromCart} />}></Route>
-                    <Route path='/admin' element={< AdminPage />}></Route>
-                    <Route path='/admin/super' element={< SuperAdminPage />}></Route>
-                </Routes>
+                                <Route path='/'
+                                    // element={<ProductList products={fakeProducts} addToCart={addToCart} />}></Route>
+                                    element={<Home />}></Route>
+                                <Route path='/cart'
+                                    element={< Cart products={currentCart} removeFromCart={removeFromCart} />}></Route>
+                                <Route path='/admin' element={< AdminPage />}></Route>
+                                <Route path='/admin/super' element={< SuperAdminPage />}></Route>
+                            </Routes>
+                        </CategoriesContestProvider>
+                    </ProductContestProvider>
+                </div>
                 <Footer />
             </Router>
         </div>

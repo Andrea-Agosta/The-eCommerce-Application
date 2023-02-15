@@ -6,7 +6,7 @@ export const getAllStores = async (): Promise<IStore[]> => {
   return await getStores();
 }
 
-export const getStoreById = async (id: number): Promise<IStore> => {
+export const getStoreById = async (id: number): Promise<IStore[]> => {
   if (id) return await getStoreByID(id);
   throw new Error("Bad Request");
 }

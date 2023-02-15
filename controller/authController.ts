@@ -16,7 +16,10 @@ passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField
       if (req.body.role === 'admin') {
         if (req.body.storeName) {
           const store = await addStore(req.body.storeName);
-          const user = await createAdminUser(email, hashPassword, req.body.role, store.uniqueStoreId);
+          const user = store[0] && await createAdminUser(email, hashPassword, req.body.role, store[0].uniqueStoreId);
+          if (!user) {
+            throw new Error('Bad request');
+          }
           return done(null, user);
         }
         throw new Error('Bad request');
@@ -37,7 +40,8 @@ passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField:
     if (!user) {
       return done(null, false, { message: 'User not found' });
     }
-    const validate: boolean = bcrypt.compareSync(password, user.password);
+
+    const validate: boolean | undefined = user[0] && bcrypt.compareSync(password, user[0].password);
 
     if (!validate) {
       return done(null, false, { message: 'Wrong Password' });

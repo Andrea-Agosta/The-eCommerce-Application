@@ -15,5 +15,5 @@ export const connectionDB = async (query: string) => {
   const client = await pool.connect();
   const product = await client.query(query);
   client.release();
-  return await product.rows[0];
+  return await product.rows;
 };
