@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-// import Card from './components/Card';
 import { ProductContext } from '../../context/product';
+import Card from './Card';
 
 interface Props {
   category: string;
@@ -17,8 +17,8 @@ const Section = ({ category }: Props) => {
         <Link to={`/category/${'name'}`} className='text-violet-500 hover:text-orange-400 mr-8' > See all </Link>
       </div>
       <div className='bg-white p-4 transition duration-200 ease-in-out overflow-hidden' >
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-          {/* {products.map((product, index) => <Card key={index} product={product} />)} */}
+        <div className='grid grid-cols-12 overflow-x-scroll gap-40'>
+          {products.map((product, index) => <Card key={index} product={product} />)}
         </div>
       </div>
     </section>

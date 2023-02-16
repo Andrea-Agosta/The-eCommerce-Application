@@ -1,4 +1,4 @@
-import { deleteProductById, getAllProducts, getAllProductsCategories, updateProductById } from '../controller/productController';
+import { deleteProductById, getAllProducts, getAllProductsCategories, getProductsByCategories, updateProductById } from '../controller/productController';
 import express, { Request, Response } from 'express';
 import { IProduct, IProductUpdate } from 'type/product';
 import { getProductByID } from '../dbRepository/productRepository';
@@ -28,6 +28,15 @@ router.get('/:id', async (req: Request, res: Response) => {
   try {
     const product: IProduct[] = await getProductByID(Number(req.params.id));
     res.status(200).json(product);
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+});
+
+router.get('/:category', async (req: Request, res: Response) => {
+  try {
+    const categories: IProduct[] = await getProductsByCategories(req.params.category);
+    res.status(200).json(categories);
   } catch (err) {
     res.status(400).send({ message: err.message });
   }

@@ -16,6 +16,11 @@ export const getProductByID = async (id: number): Promise<IProduct[]> => {
   return await connectionDB(query);
 };
 
+export const productsByCategory = async (category: string): Promise<IProduct[]> => {
+  const query: string = `select * from ProductData where category = '${category}'`;
+  return await connectionDB(query);
+};
+
 export const updateProduct = async (query: string): Promise<string> => {
   await connectionDB(query);
   return 'Product successfully updated';

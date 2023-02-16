@@ -9,19 +9,13 @@ import { ICategory } from '../../../type/product';
 import backgroundImage from '../images/background.jpg';
 // @ts-ignore
 import mobileBackgroundImage from '../images/mobile_background.png';
+import { Category } from '../components/products/Category';
 
 
 const Hompage = () => {
   const { categories, setCategories } = useContext(CategoriesContext);
-  const { setProducts } = useContext(ProductContext);
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: `/api/product/`,
-    })
-      .then(async response => setProducts(response.data))
-
     axios({
       method: 'get',
       url: `/api/product/categories`,
@@ -32,8 +26,6 @@ const Hompage = () => {
       });
   }, []);
 
-  console.log(categories, 'categories')
-
   return (
     <div>
       <img src={backgroundImage} alt='background' className='hidden md:block' />
@@ -42,9 +34,12 @@ const Hompage = () => {
         <h2 className='text-center text-2xl mt-5'>Buy and receive it in 2 days!</h2>
         <Modal />
       </div>
-      {
-        categories?.map((category, index) => <Section key={index} category={category} />)
-      }
+      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:p-4'>
+        {
+          // categories?.map((category, index) => <Section key={index} category={category} />)
+          categories?.map((category, index) => <Category key={index} category={category} />)
+        }
+      </div>
     </div>
   )
 }
