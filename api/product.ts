@@ -24,7 +24,7 @@ router.get('/categories', async (_req: Request, res: Response) => {
   }
 });
 
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/categories/:categories/:id', async (req: Request, res: Response) => {
   try {
     const product: IProduct[] = await getProductByID(Number(req.params.id));
     res.status(200).json(product);
@@ -33,9 +33,9 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/:category', async (req: Request, res: Response) => {
+router.get('/categories/:categories', async (req: Request, res: Response) => {
   try {
-    const categories: IProduct[] = await getProductsByCategories(req.params.category);
+    const categories: IProduct[] = await getProductsByCategories(req.params.categories);
     res.status(200).json(categories);
   } catch (err) {
     res.status(400).send({ message: err.message });

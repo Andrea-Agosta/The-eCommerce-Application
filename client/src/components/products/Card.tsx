@@ -15,7 +15,7 @@ export default function Card({ product }: { product: IProduct }) {
             className='h-44'
           />
         </figure>
-        <div className="h-32">
+        <div className="h-36">
           <p className="mt-3 text-lg text-black font-bold"> {product.price} </p>
           <p className="mt-1 text-sm text-[#2E4057] border-b border-gray-600 border-dashed pb-2" > {product.quantity > 0 ? `Quantity: ${product.quantity}` : " Out of Stock"} </p>
           <h5 className="mt-2 font text-sm text-[#2F2D2E]"> {product.title} </h5>

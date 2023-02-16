@@ -13,16 +13,16 @@ const Product = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `/api/product/${category}`,
+      url: `http://localhost:8080/api/product/categories/${category}`,
     })
-      .then(async response => setProducts(response.data))
+      .then(async response => await setProducts(response.data));
   }, []);
 
   console.log(products)
 
   return (
     <section className='bg-white p-4' >
-      <div className='grid grid-row-1 md:grid-col-3 gap-6'>
+      <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
         {products.map((product, index) => <Card key={index} product={product} />)}
       </div>
     </section>

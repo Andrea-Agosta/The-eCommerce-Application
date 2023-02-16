@@ -18,7 +18,7 @@ const Hompage = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `/api/product/categories`,
+      url: `http://localhost:8080/api/product/categories`,
     })
       .then(async response => {
         const categoriesList: string[] = await response.data.map((category: ICategory) => category.category);
