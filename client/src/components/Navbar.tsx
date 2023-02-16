@@ -4,6 +4,7 @@ import { CategoriesContext } from '../context/categories';
 import { Select } from './Select';
 import { Modal } from './Modal';
 import { Dropdown } from './Dropdown';
+import { CartMenu } from './checkout/CartMenu';
 
 function NavBar() {
   const { categories } = useContext(CategoriesContext);
@@ -34,8 +35,9 @@ function NavBar() {
               <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required />
             </div>
           </form>
-          <div className="items-center hidden md:block">
+          <div className="items-center hidden md:flex flex-row">
             <Modal />
+            <CartMenu />
           </div>
         </div>
       </nav >
