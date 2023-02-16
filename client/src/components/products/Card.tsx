@@ -6,7 +6,7 @@ export default function Card({ product }: { product: IProduct }) {
   return (
     <article className="flex flex-col border-2 rounded-2xl p-5 drop-shadow-md bg-[#EFF1F3] w-36">
       <Link
-        to={`${product.category}/product/${product.id}`}
+        to={`product/${product.id}`}
       >
         <figure className="overflow-hidden rounded-lg" >
           <img
