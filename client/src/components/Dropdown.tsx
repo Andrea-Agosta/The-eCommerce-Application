@@ -1,26 +1,43 @@
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-export const Dropdown = () => {
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
+}
+
+export const Dropdown = ({ categories }: { categories: string[] }) => {
   return (
-    <>
-      <button
-        id="dropdownDefaultButton"
-        data-dropdown-toggle="dropdown"
-        className="text-[#757575] bg-[#f2f2f2] hover:bg-gray-300 focus:outline-none font-medium rounded-l-lg text-sm px-4 py-2.5 text-center inline-flex items-cente"
-        type="button"
-      >Catalogue
-        <svg className="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-      </button>
-
-      <div id="dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-l-lg shadow w-44">
-        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-          {
-            // !MAPPING THE CATEGORY
-            <li>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-            </li>
-          }
-        </ul>
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+          ...more
+          <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+        </Menu.Button>
       </div>
-    </>
+
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            {
+              categories.map((category, index) => (
+                <Menu.Item key={index}>
+                  {({ active }) => (
+                    <a href={`/${category}`} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>{category} </a>
+                  )}
+                </Menu.Item>
+              ))}
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu >
   )
 }

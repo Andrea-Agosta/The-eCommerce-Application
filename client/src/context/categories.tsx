@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-
 interface ICategoryContext {
   categories: string[],
   setCategories: React.Dispatch<React.SetStateAction<string[]>>,

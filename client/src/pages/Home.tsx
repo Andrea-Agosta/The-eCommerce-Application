@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import Section from '../components/products/Section'
 import axios from 'axios';
 import { ProductContext } from '../context/product';
 import { Modal } from '../components/Modal';
@@ -15,16 +14,16 @@ import { Category } from '../components/products/Category';
 const Hompage = () => {
   const { categories, setCategories } = useContext(CategoriesContext);
 
-  useEffect(() => {
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/api/product/categories`,
-    })
-      .then(async response => {
-        const categoriesList: string[] = await response.data.map((category: ICategory) => category.category);
-        setCategories(categoriesList);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: 'get',
+  //     url: `http://localhost:8080/api/product/categories`,
+  //   })
+  //     .then(async response => {
+  //       const categoriesList: string[] = await response.data.map((category: ICategory) => category.category);
+  //       setCategories(categoriesList);
+  //     });
+  // }, []);
 
   return (
     <div>
@@ -35,10 +34,7 @@ const Hompage = () => {
         <Modal />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:p-4'>
-        {
-          // categories?.map((category, index) => <Section key={index} category={category} />)
-          categories?.map((category, index) => <Category key={index} category={category} />)
-        }
+        {categories?.map((category, index) => <Category key={index} category={category} />)}
       </div>
     </div>
   )

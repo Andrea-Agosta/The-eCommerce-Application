@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Search } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
-import { Dropdown } from './Dropdown';
+import { CategoriesContext } from '../context/categories';
+import { Select } from './Select';
 import { Modal } from './Modal';
+import { Dropdown } from './Dropdown';
 
 function NavBar() {
+  const { categories } = useContext(CategoriesContext);
 
   const [isClicked, setIsClicked] = useState<string>('hidden md:block');
 
   const handleClick = () => {
     isClicked === 'block md:hidden' ? setIsClicked('hidden md:block') : setIsClicked('block md:hidden')
   };
-
 
   return (
     <>
@@ -27,7 +28,7 @@ function NavBar() {
           <form className='mt-4 md:mt-0'>
             <div className="flex flex-row w-full border rounded-lg border-gray-300 bg-[#f2f2f2]">
               <div className='border-r'>
-                <Dropdown />
+                <Select />
               </div>
               <Search className='text-3xl pt-2 ml-3 text-[#757575]' />
               <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required />
@@ -37,31 +38,24 @@ function NavBar() {
             <Modal />
           </div>
         </div>
-
       </nav >
       <nav className={`border ${isClicked}`} >
         <div className="max-w-screen-xl px-4 py-3 mx-auto md:px-6" >
           <div className="flex flex-col md:flex-row md:items-center">
             <span className='block md:hidden'><Modal /></span>
-            <ul className="flex flex-col md:flex-row mt-0 mr-lg-6 md:space-x-8 space-y-3 text-sm font-medium">
-              <li>
-                <a href="/" className="text-gray-900 hover:underline items-start">Home</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-900 hover:underline items-start">Company</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-900 hover:underline items-start">Team</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-900 hover:underline items-start">Features</a>
-              </li>
+            <ul className="flex flex-col mt-0 mr-lg-6 space-y-3 text-sm font-medium md:hidden">
+              {categories.map((category, index) => <li key={index}><a href={`/${category}`} className="text-gray-900 hover:underline items-start">{category}</a></li>)}
             </ul>
+            <ul className="hidden md:flex flex-row mt-0 mr-lg-6 space-x-8 space-y-3 text-sm font-medium">
+              {categories.slice(0, 7).map((category, index) => <li key={index}><a href={`/${category}`} className="text-gray-900 hover:underline items-start">{category}</a></li>)}
+            </ul>
+            <div className='ml-10 hidden md:block'>
+              <Dropdown categories={categories.slice(7)} />
+            </div>
           </div>
         </div>
       </nav>
     </>
-
   )
 }
 

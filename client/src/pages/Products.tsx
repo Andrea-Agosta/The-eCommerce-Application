@@ -7,9 +7,6 @@ const Product = () => {
   const { products, setProducts } = useContext(ProductContext);
   const category = window.location.pathname.split('/')[1];
 
-  console.log(category)
-
-
   useEffect(() => {
     axios({
       method: 'get',
@@ -17,8 +14,6 @@ const Product = () => {
     })
       .then(async response => await setProducts(response.data));
   }, []);
-
-  console.log(products)
 
   return (
     <section className='bg-white p-4' >
