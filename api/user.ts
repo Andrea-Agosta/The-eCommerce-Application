@@ -15,7 +15,7 @@ router.get('/', async (_req: Request, res: Response) => {
 
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const user: IUser = await getUserById(Number(req.params.id));
+    const user: IUser[] = await getUserById(Number(req.params.id));
     res.status(200).json(user);
   } catch (err) {
     res.status(400).send({ message: err.message });

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "jsx": "react",
+    "jsx": "react",
     "resolveJsonModule": true,
     "target": "es2020",
     "module": "commonjs",

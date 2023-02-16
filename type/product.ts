@@ -2,7 +2,7 @@ export interface IProduct {
   id: number;
   title: string;
   description: string;
-  imageUrl: string;
+  imageurl: string;
   storeId: number;
   price: string;
   quantity: number;
@@ -11,4 +11,10 @@ export interface IProduct {
 
 export interface IProductUpdate extends IProduct {
   role: string;
+}
+
+export interface ICategory {
+  category: {
+    category: string;
+  }
 }

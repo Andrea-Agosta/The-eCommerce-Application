@@ -6,8 +6,10 @@ import auth from './api/auth';
 import product from './api/product';
 import store from './api/store';
 import passport from 'passport';
+import cors from 'cors';
 
 const app: Application = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
