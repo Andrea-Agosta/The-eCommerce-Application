@@ -6,7 +6,6 @@ interface ICount {
   rangeValue: number | undefined;
 }
 
-
 export const Count = ({ storage, handleAmountChange, rangeValue }: ICount) => {
   return (
     <div className="flex flex-row">

@@ -9,7 +9,7 @@ interface ILoginState {
 function LoginForm({ handleChangeLogin, error }: ILoginState) {
   const inputStyle = "border p-2 rounded-lg my-1 focus:ring-orange-500 focus:ring-2 focus:outline-none"
   return (
-    <div className="flex flex-col p-5">
+    <div className="flex flex-col p-5 pb-0">
       <label htmlFor="email">Email:</label>
       <input placeholder={"email"} id="email" type="email" className={inputStyle} onChange={handleChangeLogin} />
       {error.email && <p className="text-red-500 text-xs mb-4">*please insert correct {error.email} </p>}

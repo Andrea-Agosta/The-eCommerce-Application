@@ -4,6 +4,7 @@ import { CategoriesContext } from '../context/categories';
 import { Select } from './Select';
 import { Modal } from './Modal';
 import { Dropdown } from './Dropdown';
+import { CartMenu } from './checkout/CartMenu';
 
 function NavBar() {
   const { categories } = useContext(CategoriesContext);
@@ -21,6 +22,9 @@ function NavBar() {
           <a href="/" className="flex items-center">
             <span className="self-center text-xl font-semibold whitespace-nowrap font-mono text-orange-400">SaltZone</span>
           </a>
+          <div className='md:hidden mt-1'>
+            <CartMenu />
+          </div>
           <button data-collapse-toggle="navbar-default" type="button" className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:text-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400" aria-controls="navbar-default" aria-expanded="false" onClick={handleClick}>
             <span className="sr-only">Open main menu</span>
             <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
@@ -34,8 +38,9 @@ function NavBar() {
               <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required />
             </div>
           </form>
-          <div className="items-center hidden md:block">
+          <div className="items-center hidden md:flex flex-row">
             <Modal />
+            <CartMenu />
           </div>
         </div>
       </nav >

@@ -27,7 +27,8 @@ passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField
       const user = createUser(email, hashPassword, req.body.role);
       return done(null, user);
     }
-    throw new Error('Bad request');
+    const checkIfEmailAlreadyExists = await getUserByEmail(email);
+    throw !checkIfEmailAlreadyExists ? new Error('Email already exists') : new Error('Bad request');
   } catch (error) {
     done(error);
   }
