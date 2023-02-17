@@ -9,13 +9,14 @@ ALTER TABLE public.StoreData OWNER to postgres;
 
 CREATE TABLE public.UserData(
   id SERIAL PRIMARY KEY,
-  email VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(50) NOT NULL,
   password VARCHAR(200) NOT NULL,
   role VARCHAR(11) NOT NULL,
   storeId INT,
   CONSTRAINT fk_store
     FOREIGN KEY(storeId) 
 	    REFERENCES StoreData(uniqueStoreId)
+  CONSTRAINT constraint_email UNIQUE (email)
 );
 
 ALTER TABLE public.UserData OWNER to postgres;

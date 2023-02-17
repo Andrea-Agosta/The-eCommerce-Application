@@ -10,7 +10,7 @@ export const Modal = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
   const [login, setLogin] = useState<IBodyUserLogin>({} as IBodyUserLogin);
-  const [registration, setRegistration] = useState<IRegistrationUser>({} as IRegistrationUser);
+  const [registration, setRegistration] = useState<IRegistrationUser>({ role: 'user' } as IRegistrationUser);
   const [error, setError] = useState<IRegistrationUser>({} as IRegistrationUser);
 
   const cancelButtonRef = useRef(null)
@@ -26,28 +26,39 @@ export const Modal = () => {
   };
 
   const submitData = (event: MouseEvent<HTMLButtonElement>): void => {
-    const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     setError({} as IRegistrationUser);
     if (event.currentTarget.innerHTML === "LogIn" && emailRegex.test(login.email) && login.password) {
       axios({
         method: 'post',
-        url: '/api/auth/login',
+        url: 'http://localhost:8080/api/auth/login',
         data: login
-      }).then(function (response) {
+      }).then((response) => {
         console.log(response, 'response');
+
 
         //TODO I received the token But I need to store this in the cookie
         console.log(response.data, 'response');
         response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
+      }).catch(() => {
+        setError({} as IRegistrationUser);
+        setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
       });
+      !emailRegex.test(login.email) && setError(prev => ({ ...prev, email: "Email" }));
+      !login.password && setError(prev => ({ ...prev, password: "Password" }));
     };
+
+    console.log(registration.password, 'psw');
+    console.log(registration.confirmed_password, 'conf psw');
+    console.log(registration.role, 'role');
+    console.log(registration.storeName, 'name store');
 
     if (event.currentTarget.innerHTML === "Register" && emailRegex.test(registration.email) && registration.password && registration.password === registration.confirmed_password && registration.role) {
       if (registration.role === "Admin") {
         if (registration.storeName) {
           axios({
             method: 'post',
-            url: '/api/auth/signup',
+            url: 'http://localhost:8080/api/auth/signup',
             data: {
               email: registration.email,
               password: registration.password,
@@ -58,14 +69,23 @@ export const Modal = () => {
             return console.log(response, 'response');
 
             //TODO: implement how to save the token
+          }).catch((err) => {
+            setError({} as IRegistrationUser);
+            console.log(err, 'here erro')
+            setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
           });
         }
         return setError(prev => ({ ...prev, storeName: "the store name" }));
       }
-
+      console.log('yeayha')
+      console.log(emailRegex.test(registration.email), 'emelil reg');
+      console.log(registration.email, 'email');
+      console.log(registration.password, 'psw');
+      console.log(registration.confirmed_password, 'conf psw');
+      console.log(registration.role, 'role');
       axios({
         method: 'post',
-        url: '/api/auth/signup',
+        url: 'http://localhost:8080/api/auth/signup',
         data: {
           email: registration.email,
           password: registration.password,
@@ -75,11 +95,13 @@ export const Modal = () => {
         return console.log(response, 'response');
 
         //TODO: implement how to save the token
+      }).catch((err) => {
+        setError({} as IRegistrationUser);
+        console.log(err, 'here erro')
+        setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
       });
     };
 
-    !emailRegex.test(login.email) && setError(prev => ({ ...prev, email: "Email" }));
-    !login.password && setError(prev => ({ ...prev, password: "Password" }));
     !emailRegex.test(registration.email) && setError(prev => ({ ...prev, email: "Email" }));
     !registration.password && setError(prev => ({ ...prev, password: "Password" }));
     !registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: "Please confirm your Password" }));
@@ -130,19 +152,18 @@ export const Modal = () => {
                     <div className='flex flex-row'>
                       <button
                         className={`bg-white  hover:text-orange-400 text:xl w-full py-2 ${isRegistrationButton ? 'text-gray-700 border-b' : 'border border-b-0 rounded-t-lg text-orange-400'}`}
-                        onClick={() => setIsRegistrationButton(false)}
+                        onClick={() => (setIsRegistrationButton(false), setError({} as IRegistrationUser))}
                       > Login</button>
                       <button
                         className={`bg-white hover:text-orange-400 text:xl w-full py-2 ${isRegistrationButton ? 'border border-b-0 rounded-t-lg text-orange-400' : 'border-b  text-gray-700'}`}
-                        onClick={() => setIsRegistrationButton(true)}
+                        onClick={() => (setIsRegistrationButton(true), setError({} as IRegistrationUser))}
                       > Registration </button>
                     </div>
 
                     {isRegistrationButton ? <RegistrationForm handleChangeRegistration={handleChangeRegistration} error={error} /> : <LoginForm handleChangeLogin={handleChangeLogin} error={error} />}
                   </div>
 
-                  {error?.userNotFound && <p className="text-red-500 text-xs"> {error.userNotFound} </p>}
-
+                  {error?.userNotFound && <p className="text-red-500 text-sm text-center p-3 border-y border-red-500 bg-red-100 mb-3"> {error.userNotFound} </p>}
 
                   <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     <button
