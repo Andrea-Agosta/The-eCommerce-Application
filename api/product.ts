@@ -6,9 +6,9 @@ import passport from 'passport';
 const router = express.Router();
 
 
-router.get('/', async (_req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    const products: IProduct[] = await getAllProducts();
+    const products: IProduct[] = await getAllProducts(req.params.category, req.params.search);
     res.status(200).json(products);
   } catch (err) {
     res.status(400).send({ message: err.message });

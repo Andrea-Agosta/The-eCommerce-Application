@@ -6,6 +6,17 @@ export const getProducts = async (): Promise<IProduct[]> => {
   return await connectionDB(query);
 };
 
+export const getSearchProducts = async (category: string, search: string): Promise<IProduct[]> => {
+  if (category === 'All') {
+    const query: string = `SELECT * from ProductData where (title LIKE '%' || ${search} || '%' OR description LIKE '%' || ${search} || 
+    '%' OR price::text LIKE '%' || ${search} || '%' OR quantity::text LIKE '%' || ${search} || '%');`;
+    return await connectionDB(query);
+  }
+  const query: string = `SELECT * FROM ProductData WHERE category = ${category} AND (title LIKE '%' || ${search} || '%'
+      OR description LIKE '%' || ${search} || '%' OR price::text LIKE '%' || ${search} || '%' OR quantity::text LIKE '%' || ${search} || '%');`
+  return await connectionDB(query);
+};
+
 export const getCategories = async (): Promise<IProduct[]> => {
   const query: string = "SELECT DISTINCT(category) from ProductData;";
   return await connectionDB(query);

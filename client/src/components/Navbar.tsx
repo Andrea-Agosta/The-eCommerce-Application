@@ -15,6 +15,10 @@ function NavBar() {
     isClicked === 'block md:hidden' ? setIsClicked('hidden md:block') : setIsClicked('block md:hidden')
   };
 
+  const submitWithEnterKey = () => {
+
+  };
+
   return (
     <>
       <nav className="bg-white border-gray-200 ">
@@ -35,7 +39,7 @@ function NavBar() {
                 <Select />
               </div>
               <Search className='text-3xl pt-2 ml-3 text-[#757575]' />
-              <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required />
+              <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required onKeyDown={submitWithEnterKey} />
             </div>
           </form>
           <div className="items-center hidden md:flex flex-row">
