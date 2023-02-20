@@ -23,7 +23,7 @@ const connectToDB = async (query) => {
     const client = await pool.connect();
     const product = await client.query(query);
     client.release();
-    return await product.rows;
+    return product.rows;
   } catch (err) {
     console.error('Error connecting to the database: ', err.stack);
   };
@@ -37,9 +37,9 @@ const dbSeeder = async () => {
 
   await Products_Mock_data.forEach(async product => {
     const query = `
-      INSERT INTO productdata (title, description, imageUrl, storeId, price, quantity, category ) 
-      VALUES ('${product.title}','${product.description}', '${product.imageUrl}', ${product.storeId} ,'${product.price}', ${product.quantity}, '${product.category}')
-    `;
+        INSERT INTO productdata (title, description, imageUrl, storeId, price, quantity, category ) 
+        VALUES ('${product.title}','${product.description}', '${product.imageUrl}', ${product.storeId} ,'${product.price}', ${product.quantity}, '${product.category}')
+      `;
     return await connectToDB(query);
   });
 

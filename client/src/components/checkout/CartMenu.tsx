@@ -1,10 +1,13 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Cart4 } from 'react-bootstrap-icons'
+import { CartItemsContext } from '../../context/cart'
+import { CartItem } from './CartItem'
 
 export const CartMenu = () => {
   const [open, setOpen] = useState(false)
+  const { cartItems } = useContext(CartItemsContext);
 
   return (
     <>
@@ -57,11 +60,12 @@ export const CartMenu = () => {
                     </Transition.Child>
                     <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                       <div className="px-4 sm:px-6">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">Panel title</Dialog.Title>
+                        <Dialog.Title className="text-lg font-medium text-gray-900 flex justify-between">Your Cart <Cart4 className='mt-1' /></Dialog.Title>
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6 border-t-2">
                         {
-                          //todo add the cart item 
+                          //todo change quantity of items on the menu
+                          cartItems.map((item, index) => <CartItem key={index} item={item} />)
                         }
                       </div>
                     </div>

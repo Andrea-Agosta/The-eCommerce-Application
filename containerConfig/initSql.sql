@@ -15,7 +15,7 @@ CREATE TABLE public.UserData(
   storeId INT,
   CONSTRAINT fk_store
     FOREIGN KEY(storeId) 
-	    REFERENCES StoreData(uniqueStoreId)
+	    REFERENCES StoreData(uniqueStoreId),
   CONSTRAINT constraint_email UNIQUE (email)
 );
 
