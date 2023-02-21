@@ -32,7 +32,8 @@ export const Modal = () => {
       axios({
         method: 'post',
         url: 'http://localhost:8080/api/auth/login',
-        data: login
+        data: login,
+        withCredentials: true
       }).then((response) => {
         console.log(response, 'response');
 
@@ -64,7 +65,8 @@ export const Modal = () => {
               password: registration.password,
               role: registration.role,
               storeName: registration.storeName
-            }
+            },
+            withCredentials: true
           }).then(function (response) {
             return console.log(response, 'response');
 
@@ -90,7 +92,8 @@ export const Modal = () => {
           email: registration.email,
           password: registration.password,
           role: registration.role
-        }
+        },
+        withCredentials: true
       }).then(function (response) {
         return console.log(response, 'response');
 

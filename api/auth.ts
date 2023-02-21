@@ -8,10 +8,17 @@ import '../controller/authController';
 
 
 router.post('/signup', passport.authenticate('signup', { session: false }), async (req: Request<{}, {}, IBodyUser>, res: Response) => {
-  res.json({
-    message: 'Signup successful',
-    user: req.user
-  });
+  try {
+    const token = jwt.sign({ user: req.user }, 'TOP_SECRET', { expiresIn: '1h' });
+    console.log(token, 'token');
+
+    res.cookie('jwt', token).json({
+      message: 'Signup successful',
+      user: req.user
+    });
+  } catch (err) {
+    res.status(404).send(err);
+  }
 });
 
 router.post('/login', async (req, res, next) => {
@@ -24,8 +31,8 @@ router.post('/login', async (req, res, next) => {
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
         const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, 'TOP_SECRET');
-        return res.json({ token });
+        const token = jwt.sign({ user: body }, 'TOP_SECRET', { expiresIn: '1h' });
+        return res.cookie('jwt', token).send('cookie set');
       });
     } catch (error) {
       return next(error);

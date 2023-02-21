@@ -8,12 +8,14 @@ import store from './api/store';
 import passport from 'passport';
 import cors from 'cors';
 import { Request, Response, NextFunction } from 'express';
+import cookieParser from 'cookie-parser';
 
 
 const app: Application = express();
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/api/user', user);
 app.use('/api/auth', auth);
