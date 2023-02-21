@@ -1,22 +1,33 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, ChangeEvent } from 'react';
 import { Search } from 'react-bootstrap-icons';
 import { CategoriesContext } from '../context/categories';
 import { Select } from './Select';
 import { Modal } from './Modal';
 import { Dropdown } from './Dropdown';
 import { CartMenu } from './checkout/CartMenu';
+import { useNavigate } from 'react-router-dom';
 
 function NavBar() {
   const { categories } = useContext(CategoriesContext);
-
   const [isClicked, setIsClicked] = useState<string>('hidden md:block');
+  const [search, setSearch] = useState<string>('');
+  const [searchCategory, setSearchCategory] = useState<string>('All');
+  const navigate = useNavigate();
 
   const handleClick = () => {
     isClicked === 'block md:hidden' ? setIsClicked('hidden md:block') : setIsClicked('block md:hidden')
   };
 
-  const submitWithEnterKey = () => {
+  const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSearchCategory(event.target.value);
+  };
 
+  const submitWithEnterKey = (event: React.KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      !search && navigate(`/`);
+      navigate(`/${searchCategory}?category=${searchCategory}&search=${search}`);
+    }
   };
 
   return (
@@ -36,10 +47,10 @@ function NavBar() {
           <form className='mt-4 md:mt-0'>
             <div className="flex flex-row w-full border rounded-lg border-gray-300 bg-[#f2f2f2]">
               <div className='border-r'>
-                <Select />
+                <Select handleCategoryChange={handleCategoryChange} />
               </div>
               <Search className='text-3xl pt-2 ml-3 text-[#757575]' />
-              <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required onKeyDown={submitWithEnterKey} />
+              <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required onChange={e => setSearch(e.currentTarget.value)} onKeyDown={event => submitWithEnterKey(event)} />
             </div>
           </form>
           <div className="items-center hidden md:flex flex-row">

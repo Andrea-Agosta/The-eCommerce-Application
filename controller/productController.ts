@@ -1,10 +1,10 @@
 import { deleteProduct, getCategories, getProductByID, getProducts, getSearchProducts, productsByCategory, updateProduct } from "../dbRepository/productRepository";
-import { IProduct, IProductUpdate } from "../type/product";
+import { IProduct, IProductUpdate, ISearch } from "../type/product";
 import { Request } from 'express';
 
-export const getAllProducts = async (category: string | undefined, search: string | undefined): Promise<IProduct[]> => {
-  if (category && search) {
-    return getSearchProducts(category, search);
+export const getAllProducts = async (req: Request<{}, {}, {}, ISearch>): Promise<IProduct[]> => {
+  if (req.query.category && req.query.search) {
+    return getSearchProducts(req.query.category, req.query.search);
   }
   return getProducts();
 };
