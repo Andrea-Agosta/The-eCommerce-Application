@@ -8,6 +8,7 @@ export const CartItem = ({ item }: { item: ICart }) => {
   const { cartItems, setCartItems } = useContext(CartItemsContext);
   const deleteCartItem = () => {
     setCartItems(cartItems.filter(cartItem => cartItem !== item));
+    localStorage.setItem('cart', JSON.stringify(cartItems.filter(cartItem => cartItem !== item)));
   }
 
   useEffect(() => {

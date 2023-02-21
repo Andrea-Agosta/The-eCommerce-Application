@@ -24,7 +24,6 @@ const ProductID = () => {
       } else {
         setCartItems(prevState => [...prevState, { quantity: rangeValue, product: product }]);
       }
-      localStorage.setItem('cart', JSON.stringify(cartItems));
     }
   }
 
@@ -34,7 +33,9 @@ const ProductID = () => {
       url: `http://localhost:8080/api/product/categories/${category}/${id}`,
     })
       .then(async response => await setProduct(response.data[0]));
-  }, []);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+
+  }, [cartItems]);
 
   return (
     <>

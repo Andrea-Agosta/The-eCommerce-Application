@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Cart4 } from 'react-bootstrap-icons'
@@ -8,10 +8,23 @@ import { CartItem } from './CartItem'
 export const CartMenu = () => {
   const [open, setOpen] = useState(false)
   const { cartItems } = useContext(CartItemsContext);
+  const [numberItems, setNumberItems] = useState<number>(0)
 
+  const setNumberOfItemsOnCart = async () => {
+    let countItems = 0
+    await cartItems.map(item => countItems += item.quantity);
+    return countItems;
+  }
+
+  useEffect(() => {
+    setNumberOfItemsOnCart().then(resp => setNumberItems(resp))
+  }, [cartItems])
   return (
     <>
-      <button onClick={() => setOpen(true)}><Cart4 className='text-3xl ml-4' /></button>
+      <button onClick={() => setOpen(true)}>
+        <Cart4 className='text-3xl ml-4' />
+        {numberItems > 0 && <span className='relative bottom-4 left-7 bg-red-500 text-white py-1 px-2 rounded-full'>{numberItems}</span>}
+      </button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={setOpen}>
           <Transition.Child
@@ -64,7 +77,6 @@ export const CartMenu = () => {
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6 border-t-2">
                         {
-                          //todo change quantity of items on the menu
                           cartItems.map((item, index) => <CartItem key={index} item={item} />)
                         }
                       </div>
