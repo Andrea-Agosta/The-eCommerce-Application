@@ -23,34 +23,40 @@ const connectToDB = async (query) => {
     const client = await pool.connect();
     const product = await client.query(query);
     client.release();
-    return await product.rows;
+    return product.rows;
   } catch (err) {
     console.error('Error connecting to the database: ', err.stack);
   };
 }
 
 const dbSeeder = async () => {
-  await Store_Mock_data.forEach(async store => {
+
+  for (let i = 0; i < Store_Mock_data.length; i++) {
+    store = Store_Mock_data[i];
     const query = `INSERT INTO storedata (name) VALUES ('${store.name}')`;
-    return await connectToDB(query);
-  });
+    await connectToDB(query);
+  }
 
-  await Products_Mock_data.forEach(async product => {
+  for (let i = 0; i < Products_Mock_data.length; i++) {
+    store = Products_Mock_data[i];
     const query = `
-      INSERT INTO productdata (title, description, imageUrl, storeId, price, quantity, category ) 
-      VALUES ('${product.title}','${product.description}', '${product.imageUrl}', ${product.storeId} ,'${product.price}', ${product.quantity}, '${product.category}')
-    `;
-    return await connectToDB(query);
-  });
+        INSERT INTO productdata (title, description, imageUrl, storeId, price, quantity, category ) 
+        VALUES ('${store.title}','${store.description}', '${store.imageUrl}', '${store.storeId}' ,'${store.price}', '${store.quantity}', '${store.category}')
+      `;
+    await connectToDB(query);
+  }
 
-  await User_Mock_data.forEach(async user => {
+  for (let i = 0; i < User_Mock_data.length; i++) {
+    data = User_Mock_data[i];
     const salt = bcrypt.genSaltSync(Number(process.env.SALT));
-    const hash = bcrypt.hashSync(user.password, salt);
-    const store = Store_Mock_data.find(store => store.uniqueStoreId === user.uniqueStoreId);
-    const storeId = store ? store.uniqueStoreId : null;
-    const query = `INSERT INTO userdata (email, password, role, storeId) VALUES ('${user.email}','${hash}','${user.role}',${storeId})`;
-    return await connectToDB(query);
-  });
+    const hash = bcrypt.hashSync(data.password, salt);
+    const store = Store_Mock_data.find(user => user.uniqueStoreId === user.uniqueStoreId);
+    const storeId = store ? data.uniqueStoreId : null;
+    const query = `INSERT INTO userdata (email, password, role, storeId) VALUES ('${data.email}','${hash}','${data.role}','${storeId}')`;
+    await connectToDB(query);
+  }
+
+  console.log('DB Successufully fill with the data.');
 };
 
 dbSeeder();

@@ -18,3 +18,8 @@ export interface ICategory {
     category: string;
   }
 }
+
+export interface ISearch {
+  category: string;
+  search: string;
+}

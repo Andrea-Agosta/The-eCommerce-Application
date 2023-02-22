@@ -1,10 +1,13 @@
-import { ChangeEvent, Fragment, MouseEvent, useRef, useState } from 'react'
+import { ChangeEvent, Fragment, MouseEvent, useContext, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { PersonCircle } from 'react-bootstrap-icons'
 import RegistrationForm from './auth/RegistrationForm'
 import LoginForm from './auth/LoginForm'
 import { IBodyUserLogin, IRegistrationUser } from '../../../type/user';
 import axios from 'axios';
+import { UserContext } from '../context/user'
+import { decodeJwt } from '../utils/decodeJwt'
+
 
 export const Modal = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -12,7 +15,7 @@ export const Modal = () => {
   const [login, setLogin] = useState<IBodyUserLogin>({} as IBodyUserLogin);
   const [registration, setRegistration] = useState<IRegistrationUser>({ role: 'user' } as IRegistrationUser);
   const [error, setError] = useState<IRegistrationUser>({} as IRegistrationUser);
-
+  const { setUser } = useContext(UserContext);
   const cancelButtonRef = useRef(null)
 
   const handleChangeLogin = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -32,13 +35,12 @@ export const Modal = () => {
       axios({
         method: 'post',
         url: 'http://localhost:8080/api/auth/login',
-        data: login
+        data: login,
+        withCredentials: true
       }).then((response) => {
-        console.log(response, 'response');
-
-
-        //TODO I received the token But I need to store this in the cookie
-        console.log(response.data, 'response');
+        const cookieString = document.cookie;
+        const data = decodeJwt(cookieString);
+        setUser(data);
         response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
       }).catch(() => {
         setError({} as IRegistrationUser);
@@ -47,11 +49,6 @@ export const Modal = () => {
       !emailRegex.test(login.email) && setError(prev => ({ ...prev, email: "Email" }));
       !login.password && setError(prev => ({ ...prev, password: "Password" }));
     };
-
-    console.log(registration.password, 'psw');
-    console.log(registration.confirmed_password, 'conf psw');
-    console.log(registration.role, 'role');
-    console.log(registration.storeName, 'name store');
 
     if (event.currentTarget.innerHTML === "Register" && emailRegex.test(registration.email) && registration.password && registration.password === registration.confirmed_password && registration.role) {
       if (registration.role === "Admin") {
@@ -64,25 +61,21 @@ export const Modal = () => {
               password: registration.password,
               role: registration.role,
               storeName: registration.storeName
-            }
+            },
+            withCredentials: true
           }).then(function (response) {
-            return console.log(response, 'response');
-
-            //TODO: implement how to save the token
+            const cookieString = document.cookie;
+            const data = decodeJwt(cookieString);
+            setUser(data);
+            response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
           }).catch((err) => {
             setError({} as IRegistrationUser);
-            console.log(err, 'here erro')
             setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
           });
         }
         return setError(prev => ({ ...prev, storeName: "the store name" }));
       }
-      console.log('yeayha')
-      console.log(emailRegex.test(registration.email), 'emelil reg');
-      console.log(registration.email, 'email');
-      console.log(registration.password, 'psw');
-      console.log(registration.confirmed_password, 'conf psw');
-      console.log(registration.role, 'role');
+
       axios({
         method: 'post',
         url: 'http://localhost:8080/api/auth/signup',
@@ -90,14 +83,14 @@ export const Modal = () => {
           email: registration.email,
           password: registration.password,
           role: registration.role
-        }
+        },
+        withCredentials: true
       }).then(function (response) {
         return console.log(response, 'response');
 
         //TODO: implement how to save the token
       }).catch((err) => {
         setError({} as IRegistrationUser);
-        console.log(err, 'here erro')
         setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
       });
     };

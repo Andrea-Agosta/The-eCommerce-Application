@@ -1,20 +1,38 @@
 import axios from 'axios';
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react';
 import Card from '../components/products/Card';
 import { ProductContext } from '../context/product';
-
+import { useLocation } from 'react-router-dom';
 
 const Product = () => {
   const { products, setProducts } = useContext(ProductContext);
-  const category = window.location.pathname.split('/')[1];
+  const { pathname, search } = useLocation();
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/api/product/categories/${category}`,
-    })
-      .then(async response => await setProducts(response.data));
-  }, []);
+    const urlParams = new URLSearchParams(search);
+    const categoryParams = urlParams.get('category');
+    const searchParams = urlParams.get('search');
+
+    if (categoryParams && searchParams) {
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/product`,
+        params: {
+          category: categoryParams,
+          search: searchParams
+        }
+      })
+        .then(res => setProducts(res.data))
+        .catch(err => console.error(err))
+    } else {
+      const category = pathname.split('/')[1];
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/product/categories/${category}`,
+      })
+        .then(async response => await setProducts(response.data));
+    }
+  }, [pathname, search]);
 
   return (
     <>
@@ -23,12 +41,17 @@ const Product = () => {
       </div>
 
       <section className='bg-white p-4' >
-        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
-          {products.map((product, index) => <Card key={index} product={product} />)}
-        </div>
+        {
+          products.length ?
+            <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
+              {products.map((product, index) => <Card key={index} product={product} />)}
+            </div>
+            :
+            <h2 className='text-2xl text-center mt-28'>Sorry, but the Item is not Avaleible</h2>
+        }
       </section>
     </>
   )
 }
 
-export default Product
+export default Product;

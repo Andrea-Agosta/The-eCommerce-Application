@@ -1,7 +1,9 @@
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useContext, useEffect, useState } from "react"
+import { ICart } from "../../../type/cart";
 import { IProduct } from "../../../type/product";
 import { Count } from "../components/products/Count";
+import { CartItemsContext } from "../context/cart";
 
 
 const ProductID = () => {
@@ -10,18 +12,19 @@ const ProductID = () => {
   const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => setRangeValue(Number(event.currentTarget.value));
   const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
   const category = window.location.pathname.split('/')[1];
+  const { cartItems, setCartItems } = useContext(CartItemsContext);
 
   const makeOrder = () => {
-    //todo add cart context and make the fetch at the end to delete from the db
-
-    // fetch(`/api/milk/${id}`, {
-    //   method: 'PATCH',
-    //   body: JSON.stringify({
-    //     quantity: rangeValue,
-    //   }),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //   },
+    if (product) {
+      const cartItemIndex: number = cartItems.findIndex(item => item.product === product);
+      if (cartItemIndex !== -1) {
+        const updatedCartItems: ICart[] = [...cartItems];
+        updatedCartItems[cartItemIndex].quantity += rangeValue;
+        setCartItems(updatedCartItems);
+      } else {
+        setCartItems(prevState => [...prevState, { quantity: rangeValue, product: product }]);
+      }
+    }
   }
 
   useEffect(() => {
@@ -30,14 +33,24 @@ const ProductID = () => {
       url: `http://localhost:8080/api/product/categories/${category}/${id}`,
     })
       .then(async response => await setProduct(response.data[0]));
-  }, []);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+
+  }, [cartItems]);
 
   return (
     <>
-      <div className="bnr max-w-full bg-black px-4 py-1 overflow-hidden bg-gradient-to-br from-red-600 to-blue-900" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1533134486753-c833f0ed4866?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)", backgroundSize: "cover" }}>
+      {/* banner */}
+      <div
+        className="bnr max-w-full bg-black px-4 py-1 overflow-hidden bg-gradient-to-br from-red-600 to-blue-900"
+        style={{
+          backgroundImage: "url(https://images.unsplash.com/photo-1533134486753-c833f0ed4866?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)"
+          , backgroundSize: "cover"
+        }}
+      >
         <h2 className="text-orange-400 text-2xl text-center text-shadow p-5">Don't be late for the superdeal</h2>
       </div>
 
+      {/* page */}
       <article className="flex flex-col md:flex-row drop-shadow-md max-w-sm md:max-w-fit p-4 md:p-10">
         <figure className="rounded-t-2xl md:rounded-l-2xl md:rounded-r-none flex justify-center bg-[#f6f6f6] md:w-[230%]" >
           <img src={product?.imageurl} alt={product?.title} className='h-40 my-5' />

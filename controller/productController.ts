@@ -1,25 +1,28 @@
-import { deleteProduct, getCategories, getProductByID, getProducts, productsByCategory, updateProduct } from "../dbRepository/productRepository";
-import { IProduct, IProductUpdate } from "../type/product";
+import { deleteProduct, getCategories, getProductByID, getProducts, getSearchProducts, productsByCategory, updateProduct } from "../dbRepository/productRepository";
+import { IProduct, IProductUpdate, ISearch } from "../type/product";
 import { Request } from 'express';
 
-export const getAllProducts = async (): Promise<IProduct[]> => {
-  return await getProducts();
+export const getAllProducts = async (req: Request<{}, {}, {}, ISearch>): Promise<IProduct[]> => {
+  if (req.query.category && req.query.search) {
+    return getSearchProducts(req.query.category, req.query.search);
+  }
+  return getProducts();
 };
 
 export const getAllProductsCategories = async (): Promise<IProduct[]> => {
-  return await getCategories();
+  return getCategories();
 };
 
 export const getProductById = async (id: number): Promise<IProduct[]> => {
   if (id) {
-    return await getProductByID(id);
+    return getProductByID(id);
   }
   throw new Error("Bad Request");
 }
 
 export const getProductsByCategories = async (category: string | undefined): Promise<IProduct[]> => {
   if (category) {
-    return await productsByCategory(category);
+    return productsByCategory(category);
   }
   throw new Error("Bad Request");
 }
