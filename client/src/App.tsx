@@ -24,6 +24,8 @@ import axios from 'axios';
 import { ICategory } from '../../type/product.js';
 import { CategoriesContext } from './context/categories.js';
 import { CartItemsContext } from './context/cart.js';
+import { decodeJwt } from './utils/decodeJwt';
+import { UserContext } from './context/user';
 
 // const addToCart = (productId: string) => {
 //     console.log("Add " + productId + " From the App")
@@ -44,8 +46,14 @@ const App = () => {
     // const [currentCart, setCurrentCart] = useState(getCurrentCart());
     const { categories, setCategories } = useContext(CategoriesContext);
     const { cartItems, setCartItems } = useContext(CartItemsContext);
+    const { setUser } = useContext(UserContext);
+    const cookieString = document.cookie;
 
     useEffect(() => {
+        if (cookieString) {
+            const data = decodeJwt(cookieString);
+            setUser(data);
+        }
         axios({
             method: 'get',
             url: `http://localhost:8080/api/product/categories`,
