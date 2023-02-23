@@ -3,7 +3,7 @@ import { Search } from 'react-bootstrap-icons';
 import { CategoriesContext } from '../context/categories';
 import { Select } from './Select';
 import { Modal } from './Modal';
-import { Dropdown } from './Dropdown';
+import { Dropdown } from './Dropdown/Dropdown';
 import { CartMenu } from './checkout/CartMenu';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,7 +54,7 @@ function NavBar() {
             </div>
           </form>
           <div className="items-center hidden md:flex flex-row">
-            <Modal />
+            {/* {document.cookie ? <Dropdown props={} /> : <Modal />} */}
             <CartMenu />
           </div>
         </div>
@@ -62,15 +62,17 @@ function NavBar() {
       <nav className={`border ${isClicked}`} >
         <div className="max-w-screen-xl px-4 py-3 mx-auto md:px-6" >
           <div className="flex flex-col md:flex-row md:items-center">
-            <span className='block md:hidden'><Modal /></span>
+            <span className='block md:hidden'>
+              {/* {document.cookie ? <Dropdown props={ } /> : <Modal />} */}
+            </span>
             <ul className="flex flex-col mt-0 mr-lg-6 space-y-3 text-sm font-medium md:hidden">
               {categories.map((category, index) => <li key={index}><a href={`/${category}`} className="text-gray-900 hover:underline items-start">{category}</a></li>)}
             </ul>
             <ul className="hidden md:flex flex-row mt-0 mr-lg-6 space-x-8 space-y-3 text-sm font-medium">
-              {categories.slice(0, 7).map((category, index) => <li key={index}><a href={`/${category}`} className="text-gray-900 hover:underline items-start">{category}</a></li>)}
+              {categories.slice(0, 7).map((category, index) => <li key={index}><a href={`/${category}`} className="text-gray-900 hover:underline">{category}</a></li>)}
             </ul>
             <div className='ml-10 hidden md:block'>
-              <Dropdown categories={categories.slice(7)} />
+              <Dropdown props={categories.slice(7)} />
             </div>
           </div>
         </div>

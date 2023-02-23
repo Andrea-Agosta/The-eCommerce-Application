@@ -15,7 +15,7 @@ export const Modal = () => {
   const [login, setLogin] = useState<IBodyUserLogin>({} as IBodyUserLogin);
   const [registration, setRegistration] = useState<IRegistrationUser>({ role: 'user' } as IRegistrationUser);
   const [error, setError] = useState<IRegistrationUser>({} as IRegistrationUser);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const cancelButtonRef = useRef(null)
 
   const handleChangeLogin = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -86,9 +86,10 @@ export const Modal = () => {
         },
         withCredentials: true
       }).then(function (response) {
-        return console.log(response, 'response');
-
-        //TODO: implement how to save the token
+        const cookieString = document.cookie;
+        const data = decodeJwt(cookieString);
+        setUser(data);
+        response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
       }).catch((err) => {
         setError({} as IRegistrationUser);
         setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));

@@ -1,12 +1,13 @@
 import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Category } from './Category';
 
-function classNames(...classes: string[]) {
+export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Dropdown = ({ categories }: { categories: string[] }) => {
+export const Dropdown = ({ props }: { props: string[] }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -26,16 +27,17 @@ export const Dropdown = ({ categories }: { categories: string[] }) => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
+          {/* <div className="py-1">
             {
-              categories.map((category, index) => (
+              props.map((category, index) => (
                 <Menu.Item key={index}>
                   {({ active }) => (
                     <a href={`/${category}`} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>{category} </a>
                   )}
                 </Menu.Item>
               ))}
-          </div>
+          </div> */}
+          <Category props={props} />
         </Menu.Items>
       </Transition>
     </Menu >
