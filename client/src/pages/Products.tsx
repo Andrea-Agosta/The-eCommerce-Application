@@ -3,17 +3,22 @@ import { useContext, useEffect } from 'react';
 import Card from '../components/products/Card';
 import { ProductContext } from '../context/product';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const Product = () => {
   const { products, setProducts } = useContext(ProductContext);
   const { pathname, search } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(search);
     const categoryParams = urlParams.get('category');
     const searchParams = urlParams.get('search');
 
-    if (categoryParams && searchParams) {
+    if (categoryParams) {
+      console.log(searchParams)
+      searchParams === '' && navigate('/');
       axios({
         method: 'get',
         url: `http://localhost:8080/api/product`,
@@ -25,7 +30,8 @@ const Product = () => {
         .then(res => setProducts(res.data))
         .catch(err => console.error(err))
     } else {
-      const category = pathname.split('/')[1];
+      console.log('here')
+      const category = pathname.split('/')[pathname.split('/').length - 1];
       axios({
         method: 'get',
         url: `http://localhost:8080/api/product/categories/${category}`,

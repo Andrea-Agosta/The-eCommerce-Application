@@ -1,5 +1,5 @@
 import AdminProductList from "./products/AdminProductList.jsx";
-import {fakeProducts} from "../fakedata/fakedata.js";
+import { fakeProducts } from "../fakedata/fakedata.js";
 
 function AdminPage() {
     const currentStore = "Salt store number 2";

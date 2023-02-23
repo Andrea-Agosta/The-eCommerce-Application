@@ -12,6 +12,7 @@ import { CartItemsContext } from './context/cart';
 import { decodeJwt } from './utils/decodeJwt';
 import { UserContext } from './context/user';
 import PrivateRoutes from './utils/privateRoute';
+import { Store } from './pages/Store';
 
 
 const App = () => {
@@ -48,20 +49,17 @@ const App = () => {
                 <NavBar />
                 <div className="min-h-screen">
                     <Routes>
-                        <Route element={<PrivateRoutes />}>
 
-                            {/* <Route path='/create-new-user' element={<NewUserForm />}></Route>
-<Route path='/login' element={<LoginForm />}></Route> */}
-                            <Route path='/'
-                                // element={<ProductList products={fakeProducts} addToCart={addToCart} />}></Route>
-                                element={<Home />}></Route>
-                            <Route path='/:category'
-                                element={<Product />}></Route>
-                            <Route path='/:category/product/:id'
-                                element={<ProductID />}></Route>
-                            {/* <Route path='/cart'
-                            element={< Cart products={currentCart} removeFromCart={removeFromCart} />}></Route>
-                        <Route path='/admin' element={< AdminPage />}></Route>
+                        <Route path='/'
+                            element={<Home />}></Route>
+                        <Route path='/category/:category'
+                            element={<Product />}></Route>
+                        <Route path='/category/:category/product/:id'
+                            element={<ProductID />}></Route>
+                        <Route element={<PrivateRoutes />}>
+                            <Route path='/store'
+                                element={<Store />}></Route>
+                            {/* <Route path='/admin' element={< AdminPage />}></Route>
                         <Route path='/admin/super' element={< SuperAdminPage />}></Route> */}
                         </Route>
 

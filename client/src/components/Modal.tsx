@@ -6,7 +6,7 @@ import LoginForm from './auth/LoginForm'
 import { IBodyUserLogin, IRegistrationUser } from '../../../type/user';
 import axios from 'axios';
 import { UserContext } from '../context/user'
-import { decodeJwt } from '../utils/decodeJwt'
+import { decodeJwt } from '../utils/decodeJwt';
 
 
 export const Modal = () => {
@@ -17,6 +17,7 @@ export const Modal = () => {
   const [error, setError] = useState<IRegistrationUser>({} as IRegistrationUser);
   const { user, setUser } = useContext(UserContext);
   const cancelButtonRef = useRef(null)
+
 
   const handleChangeLogin = (event: ChangeEvent<HTMLInputElement>): void => {
     const { value, id } = event.currentTarget;

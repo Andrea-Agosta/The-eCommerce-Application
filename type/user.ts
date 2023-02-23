@@ -21,3 +21,11 @@ export interface IRegistrationUser extends IUser {
   confirmed_password: string;
   userNotFound: string
 }
+
+export interface IUserState {
+  user: {
+    email: string;
+    role: string;
+    storeId: string;
+  };
+}
