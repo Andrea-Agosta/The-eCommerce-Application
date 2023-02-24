@@ -1,5 +1,6 @@
 import { IStore } from "../type/store";
 import { connectionDB } from "../database/dbConnection";
+import { IProduct } from "type/product";
 
 export const getStores = async (): Promise<IStore[]> => {
   const query: string = "select * from StoreData";
@@ -16,6 +17,11 @@ export const getStoreByID = async (id: number): Promise<IStore[]> => {
   const query: string = `select * from StoreData WHERE uniqueStoreId = '${id}'`;
   return await connectionDB(query);
 }
+
+export const getProductsByStore = async (storeId: number): Promise<IProduct[]> => {
+  const query: string = `select * from ProductData WHERE storeId = '${storeId}'`;
+  return await connectionDB(query);
+};
 
 export const getStoreByName = async (name: string): Promise<IStore[]> => {
   const query: string = `select * from StoreData WHERE name = '${name}'`;

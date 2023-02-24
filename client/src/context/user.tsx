@@ -1,9 +1,9 @@
 import { createContext, useState } from "react";
-import { IBodyUser } from "../../../type/user";
+import { IUserState } from "../../../type/user";
 
 interface IContextUser {
-  user: IBodyUser,
-  setUser: React.Dispatch<React.SetStateAction<IBodyUser>>,
+  user: IUserState,
+  setUser: React.Dispatch<React.SetStateAction<IUserState>>,
 }
 
 interface IData {
@@ -13,6 +13,6 @@ interface IData {
 export const UserContext = createContext<IContextUser>({} as IContextUser);
 
 export const UserContestProvider = ({ children }: IData) => {
-  const [user, setUser] = useState<IBodyUser>({} as IBodyUser);
+  const [user, setUser] = useState<IUserState>({} as IUserState);
   return <UserContext.Provider value={{ user, setUser }}> {children} </UserContext.Provider>
 };

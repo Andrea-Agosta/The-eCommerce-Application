@@ -1,17 +1,21 @@
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import { Fragment, useContext } from 'react'
+import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Category } from './Category';
+import { PersonCircle } from 'react-bootstrap-icons';
+import { UserContext } from '../../context/user';
+import { UserDashboard } from './UserDashboard';
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+export const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
-export const Dropdown = ({ categories }: { categories: string[] }) => {
+export const Dropdown = ({ props, name }: { props: string[], name: string }) => {
+  const { user } = useContext(UserContext);
+
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className={name === 'user' ? 'm-5' : "relative inline-block text-left"} >
       <div>
         <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-          ...more
+          {(name === 'user' && user.user) ? <> <PersonCircle className='text-xl mt-0 mr-4 md:mr-2 text-orange-400 md:text-gray-700 hover:text-orange-400' /> {user.user.email.split('@')[0]}</> : '...more'}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -26,16 +30,7 @@ export const Dropdown = ({ categories }: { categories: string[] }) => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            {
-              categories.map((category, index) => (
-                <Menu.Item key={index}>
-                  {({ active }) => (
-                    <a href={`/${category}`} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>{category} </a>
-                  )}
-                </Menu.Item>
-              ))}
-          </div>
+          {(name === 'user' && user.user) ? <UserDashboard userMenu={props} /> : <Category props={props} />}
         </Menu.Items>
       </Transition>
     </Menu >

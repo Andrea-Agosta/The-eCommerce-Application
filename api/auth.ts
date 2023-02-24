@@ -11,7 +11,7 @@ router.post('/signup', passport.authenticate('signup', { session: false }), asyn
     if (!process.env.TOP_SECRET) {
       throw new Error('Missing TOP_SECRET environment variable');
     }
-    const body = { email: req.body.email, role: req.body.role };
+    const body = { email: req.body.email, role: req.body.role, storeId: req.body.storeId };
     const token = jwt.sign({ user: body }, process.env.TOP_SECRET, { expiresIn: '1h' });
     res.cookie('auth', token).json({
       message: 'Signup successful',
@@ -31,7 +31,7 @@ router.post('/login', async (req, res, next) => {
       }
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
-        const body = { email: user[0].email, role: user[0].role };
+        const body = { email: user[0].email, role: user[0].role, storeId: user[0].storeid };
         if (!process.env.TOP_SECRET) {
           throw new Error('Missing TOP_SECRET environment variable');
         }

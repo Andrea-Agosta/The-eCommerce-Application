@@ -12,7 +12,7 @@ export const Category = ({ category }: { category: string }) => {
   }, [category]);
 
   return (
-    <Link to={`/${category}`} >
+    <Link to={`/category/${category}`} >
       <div className="m-4 border rounded-lg shadow-md p-3">
         <div className="flex justify-between mb-2">
           <h1 className="font-bold">{category}</h1>

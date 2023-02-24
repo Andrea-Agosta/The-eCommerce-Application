@@ -6,7 +6,7 @@ import LoginForm from './auth/LoginForm'
 import { IBodyUserLogin, IRegistrationUser } from '../../../type/user';
 import axios from 'axios';
 import { UserContext } from '../context/user'
-import { decodeJwt } from '../utils/decodeJwt'
+import { decodeJwt } from '../utils/decodeJwt';
 
 
 export const Modal = () => {
@@ -15,8 +15,9 @@ export const Modal = () => {
   const [login, setLogin] = useState<IBodyUserLogin>({} as IBodyUserLogin);
   const [registration, setRegistration] = useState<IRegistrationUser>({ role: 'user' } as IRegistrationUser);
   const [error, setError] = useState<IRegistrationUser>({} as IRegistrationUser);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const cancelButtonRef = useRef(null)
+
 
   const handleChangeLogin = (event: ChangeEvent<HTMLInputElement>): void => {
     const { value, id } = event.currentTarget;
@@ -86,9 +87,10 @@ export const Modal = () => {
         },
         withCredentials: true
       }).then(function (response) {
-        return console.log(response, 'response');
-
-        //TODO: implement how to save the token
+        const cookieString = document.cookie;
+        const data = decodeJwt(cookieString);
+        setUser(data);
+        response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
       }).catch((err) => {
         setError({} as IRegistrationUser);
         setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
