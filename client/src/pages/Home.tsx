@@ -10,13 +10,14 @@ import mobileBackgroundImage from '../images/mobile_background.png';
 
 const Hompage = () => {
   const { categories } = useContext(CategoriesContext);
+  const cookieString = document.cookie;
   return (
     <div>
+      <h2 className='text-center text-2xl mt-5 absolute left-5 w-44 bg-white/[.8] rounded-2xl p-2 md:hidden'>Buy and receive it in 2 days!</h2>
       <img src={backgroundImage} alt='background' className='hidden md:block' />
       <img src={mobileBackgroundImage} alt='background' className='md:hidden' />
       <div className='md:hidden'>
-        <h2 className='text-center text-2xl mt-5'>Buy and receive it in 2 days!</h2>
-        <Modal />
+        {!cookieString && <Modal />}
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:p-4'>
         {categories?.map((category, index) => <Category key={index} category={category} />)}

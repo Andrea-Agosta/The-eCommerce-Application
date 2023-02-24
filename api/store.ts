@@ -1,4 +1,4 @@
-import { deleteStoreById, getAllStores, getStoreById } from '../controller/storeController';
+import { deleteStoreById, getAllStores, getProductByStore, getStoreById } from '../controller/storeController';
 import express, { Request, Response } from 'express';
 import { IStore } from '../type/store';
 const router = express.Router();
@@ -23,6 +23,18 @@ router.get('/:id', async (req: Request, res: Response) => {
     }
     const store: IStore[] = await getStoreById(Number(req.params.id));
     return res.status(200).json(store);
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
+  }
+});
+
+router.get('/product/:storeId', async (req: Request, res: Response) => {
+  try {
+    if (req.body.role === 'user') {
+      return res.status(403).send({ message: 'Forbidden access' });
+    }
+    const product = await getProductByStore(Number(req.params.storeId));
+    return res.status(200).json(product);
   } catch (err) {
     return res.status(400).send({ message: err.message });
   }

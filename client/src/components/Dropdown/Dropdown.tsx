@@ -12,7 +12,7 @@ export const Dropdown = ({ props, name }: { props: string[], name: string }) => 
   const { user } = useContext(UserContext);
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className={name === 'user' ? 'm-5' : "relative inline-block text-left"} >
       <div>
         <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
           {(name === 'user' && user.user) ? <> <PersonCircle className='text-xl mt-0 mr-4 md:mr-2 text-orange-400 md:text-gray-700 hover:text-orange-400' /> {user.user.email.split('@')[0]}</> : '...more'}

@@ -31,7 +31,7 @@ router.post('/login', async (req, res, next) => {
       }
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
-        const body = { email: user[0].email, role: user[0].role, storeeId: user[0].storeId };
+        const body = { email: user[0].email, role: user[0].role, storeId: user[0].storeid };
         if (!process.env.TOP_SECRET) {
           throw new Error('Missing TOP_SECRET environment variable');
         }
