@@ -9,7 +9,7 @@ export interface IProduct {
   category: string;
 }
 
-export interface IProductUpdate extends IProduct {
+export interface IProductCreate extends IProduct {
   role: string;
 }
 

@@ -1,5 +1,7 @@
 import { connectionDB } from "../database/dbConnection";
-import { IProduct } from "../type/product";
+import { IProduct, IProductCreate } from "../type/product";
+import { Request } from 'express';
+
 
 export const getProducts = async (): Promise<IProduct[]> => {
   const query: string = "select * from ProductData";
@@ -30,6 +32,12 @@ export const getProductByID = async (id: number): Promise<IProduct[]> => {
 export const productsByCategory = async (category: string): Promise<IProduct[]> => {
   const query: string = `select * from ProductData where category = '${category}'`;
   return await connectionDB(query);
+};
+
+export const addProduct = async (req: Request<{}, {}, IProductCreate>): Promise<string> => {
+  const query: string = `INSERT INTO ProductData (title, description, imageUrl, storeId, price, quantity, category) VALUES ('${req.body.title}','${req.body.description}','${req.body.imageurl}','${req.body.storeId}', '${req.body.price}', '${req.body.quantity}', '${req.body.category}')`;
+  await connectionDB(query);
+  return 'Product added successfully'
 };
 
 export const updateProduct = async (query: string): Promise<string> => {
