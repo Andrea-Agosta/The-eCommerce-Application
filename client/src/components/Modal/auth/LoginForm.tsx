@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { IUser } from "../../../../type/user";
+import { IUser } from "../../../../../type/user";
 
 interface ILoginState {
   handleChangeLogin(event: ChangeEvent<HTMLInputElement>): void;

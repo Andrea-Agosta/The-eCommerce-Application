@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { IRegistrationUser } from "../../../../type/user";
+import { IRegistrationUser } from "../../../../../type/user";
 
 interface IRegistrationState {
   handleChangeRegistration(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void;
