@@ -25,7 +25,7 @@ CREATE TABLE public.ProductData(
   id SERIAL PRIMARY KEY, 
   title VARCHAR(100) NOT NULL, 
   description TEXT, 
-  imageUrl VARCHAR(100),
+  imageUrl VARCHAR(200),
   storeId INT NOT NULL, 
   price VARCHAR(50) NOT NULL, 
   quantity INT NOT NULL, 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
-import { IProduct } from "../../../../../type/product";
+import { IProduct, IProductError } from "../../../../../type/product";
 import { decodeJwt } from "../../../utils/decodeJwt";
 import { Select } from "../../Select";
 import { InputGroup } from "../InputGroup";
@@ -12,6 +12,7 @@ interface ICloseModal {
 export const AddItemForm = ({ handleClose }: ICloseModal) => {
   const formInput = ["title", 'description', 'imageurl', 'price', 'quantity'];
   const [data, setData] = useState<IProduct>({ category: 'baby' } as IProduct);
+  const [error, setError] = useState<IProductError>({} as IProductError);
   const cookieString = document.cookie;
   const cookieInfo = decodeJwt(cookieString);
 
@@ -26,6 +27,7 @@ export const AddItemForm = ({ handleClose }: ICloseModal) => {
   };
 
   const submitData = () => {
+    setError({} as IProductError);
     if (data.title && data.price && data.quantity && data.category) {
       axios({
         method: 'post',
@@ -43,24 +45,23 @@ export const AddItemForm = ({ handleClose }: ICloseModal) => {
         headers: {
           Authorization: `Bearer ${cookieString.split('=')[1]}`,
         }
-      }).then((response) => {
-        console.log(response);
-        handleClose();
-      }).catch((err) => {
-        console.log(err)
-        // setError({} as IRegistrationUser);
-        // setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
-      });
+      })
+        .then(() => handleClose())
+        .catch(() => {
+          setError({} as IProductError);
+          setError(prev => ({ ...prev, serverError: 'please try again' }));
+        });
     }
-    // !emailRegex.test(login.email) && setError(prev => ({ ...prev, email: "Email" }));
-    // !login.password && setError(prev => ({ ...prev, password: "Password" }));
+    !data.title && setError(prev => ({ ...prev, title: "Plese insert the title value" }));
+    !data.price && setError(prev => ({ ...prev, price: "Please insert the price value" }));
+    !data.quantity && setError(prev => ({ ...prev, quantity: 2 }));
   }
 
   return (
     <div className='p-5'>
       <h2 className='border-b'>Add new Item</h2>
       <div className="flex flex-col pt-2 pb-0">
-        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} />)}
+        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} />)}
         <label htmlFor='category'>Category:</label>
         <Select handleCategoryChange={handleCategoryChange} name='category' />
       </div>
@@ -68,7 +69,7 @@ export const AddItemForm = ({ handleClose }: ICloseModal) => {
         <button
           type="button"
           className="inline-flex w-full justify-center rounded-md border border-transparent bg-orange-400 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-          onClick={() => submitData}
+          onClick={() => submitData()}
         > create </button>
         <button
           type="button"

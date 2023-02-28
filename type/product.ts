@@ -13,6 +13,10 @@ export interface IProductCreate extends IProduct {
   role: string;
 }
 
+export interface IProductError extends IProductCreate {
+  [key: string]: any,
+  serverError: string;
+}
 export interface ICategory {
   category: {
     category: string;
