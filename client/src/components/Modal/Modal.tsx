@@ -1,112 +1,17 @@
-import { ChangeEvent, Fragment, MouseEvent, useContext, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { PersonCircle } from 'react-bootstrap-icons'
 import RegistrationForm from './auth/RegistrationForm'
 import LoginForm from './auth/LoginForm'
-import { IBodyUserLogin, IRegistrationUser } from '../../../../type/user';
-import axios from 'axios';
-import { UserContext } from '../../context/user'
-import { decodeJwt } from '../../utils/decodeJwt';
 import { AddItemForm } from './AddItemForm/AddItemForm'
 
 
 export const Modal = ({ type }: { type: string }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
-  const [login, setLogin] = useState<IBodyUserLogin>({} as IBodyUserLogin);
-  const [registration, setRegistration] = useState<IRegistrationUser>({ role: 'user' } as IRegistrationUser);
-  const [error, setError] = useState<IRegistrationUser>({} as IRegistrationUser);
-  const { user, setUser } = useContext(UserContext);
-  const cancelButtonRef = useRef(null)
   const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none";
   const modalAddItemButton = "text-4xl font-bold text-white bg-black rounded-full w-14 h-14 pb-1 hover:bg-orange-400";
-
   const handleClose = () => setOpen(false);
-
-  const handleChangeLogin = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { value, id } = event.currentTarget;
-    setLogin(prev => ({ ...prev, [id]: value }));
-  };
-
-  const handleChangeRegistration = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { value, id } = event.currentTarget;
-    setRegistration(prev => ({ ...prev, [id]: value }));
-  };
-
-  const submitData = (event: MouseEvent<HTMLButtonElement>): void => {
-    const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    setError({} as IRegistrationUser);
-    if (event.currentTarget.innerHTML === "LogIn" && emailRegex.test(login.email) && login.password) {
-      axios({
-        method: 'post',
-        url: 'http://localhost:8080/api/auth/login',
-        data: login,
-        withCredentials: true
-      }).then((response) => {
-        const cookieString = document.cookie;
-        const data = decodeJwt(cookieString);
-        setUser(data);
-        response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
-      }).catch(() => {
-        setError({} as IRegistrationUser);
-        setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
-      });
-      !emailRegex.test(login.email) && setError(prev => ({ ...prev, email: "Email" }));
-      !login.password && setError(prev => ({ ...prev, password: "Password" }));
-    };
-
-    if (event.currentTarget.innerHTML === "Register" && emailRegex.test(registration.email) && registration.password && registration.password === registration.confirmed_password && registration.role) {
-      if (registration.role === "Admin") {
-        if (registration.storeName) {
-          axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/auth/signup',
-            data: {
-              email: registration.email,
-              password: registration.password,
-              role: registration.role,
-              storeName: registration.storeName
-            },
-            withCredentials: true
-          }).then(function (response) {
-            const cookieString = document.cookie;
-            const data = decodeJwt(cookieString);
-            setUser(data);
-            response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
-          }).catch((err) => {
-            setError({} as IRegistrationUser);
-            setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
-          });
-        }
-        return setError(prev => ({ ...prev, storeName: "the store name" }));
-      }
-
-      axios({
-        method: 'post',
-        url: 'http://localhost:8080/api/auth/signup',
-        data: {
-          email: registration.email,
-          password: registration.password,
-          role: registration.role
-        },
-        withCredentials: true
-      }).then(function (response) {
-        const cookieString = document.cookie;
-        const data = decodeJwt(cookieString);
-        setUser(data);
-        response.data ? setOpen(false) : setError(prev => ({ ...prev, userNotFound: "User Not Found" }));
-      }).catch((err) => {
-        setError({} as IRegistrationUser);
-        setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
-      });
-    };
-
-    !emailRegex.test(registration.email) && setError(prev => ({ ...prev, email: "Email" }));
-    !registration.password && setError(prev => ({ ...prev, password: "Password" }));
-    !registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: "Please confirm your Password" }));
-    registration.password !== registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: "Password are be the same" }));
-    (registration.role === 'admin' && !registration.storeName) && setError(prev => ({ ...prev, storeName: "The name of the store can't be Empity" }));
-  };
 
   return (
     <>
@@ -127,7 +32,7 @@ export const Modal = ({ type }: { type: string }) => {
         }
       </button>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+        <Dialog as="div" className="relative z-10" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -159,34 +64,14 @@ export const Modal = ({ type }: { type: string }) => {
                           <div className='flex flex-row'>
                             <button
                               className={`bg-white  hover:text-orange-400 text:xl w-full py-2 ${isRegistrationButton ? 'text-gray-700 border-b' : 'border border-b-0 rounded-t-lg text-orange-400'}`}
-                              onClick={() => (setIsRegistrationButton(false), setError({} as IRegistrationUser))}
+                              onClick={() => setIsRegistrationButton(false)}
                             > Login</button>
                             <button
                               className={`bg-white hover:text-orange-400 text:xl w-full py-2 ${isRegistrationButton ? 'border border-b-0 rounded-t-lg text-orange-400' : 'border-b  text-gray-700'}`}
-                              onClick={() => (setIsRegistrationButton(true), setError({} as IRegistrationUser))}
+                              onClick={() => setIsRegistrationButton(true)}
                             > Registration </button>
                           </div>
-
-                          {isRegistrationButton ? <RegistrationForm handleChangeRegistration={handleChangeRegistration} error={error} /> : <LoginForm handleChangeLogin={handleChangeLogin} error={error} />}
-                        </div>
-
-                        {error?.userNotFound && <p className="text-red-500 text-sm text-center p-3 border-y border-red-500 bg-red-100 mb-3"> {error.userNotFound} </p>}
-                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                          <button
-                            type="button"
-                            className="inline-flex w-full justify-center rounded-md border border-transparent bg-orange-400 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => submitData(e)}
-                          >
-                            {isRegistrationButton ? 'Register' : 'LogIn'}
-                          </button>
-                          <button
-                            type="button"
-                            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-300 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={() => setOpen(false)}
-                            ref={cancelButtonRef}
-                          >
-                            Cancel
-                          </button>
+                          {isRegistrationButton ? <RegistrationForm handleClose={handleClose} /> : <LoginForm handleClose={handleClose} />}
                         </div>
                       </>
                       :
