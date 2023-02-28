@@ -54,7 +54,7 @@ passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField:
   }
 }));
 
-passport.use(new JWTstrategy({ secretOrKey: process.env.TOP_SECRET, jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token') }, async (token, done) => {
+passport.use(new JWTstrategy({ secretOrKey: process.env.TOP_SECRET, jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() }, async (token, done) => {
   try {
     return done(null, token.user);
   } catch (error) {

@@ -1,5 +1,5 @@
-import { deleteProduct, getCategories, getProductByID, getProducts, getSearchProducts, productsByCategory, updateProduct } from "../dbRepository/productRepository";
-import { IProduct, IProductUpdate, ISearch } from "../type/product";
+import { addProduct, deleteProduct, getCategories, getProductByID, getProducts, getSearchProducts, productsByCategory, updateProduct } from "../dbRepository/productRepository";
+import { IProduct, IProductCreate, ISearch } from "../type/product";
 import { Request } from 'express';
 
 export const getAllProducts = async (req: Request<{}, {}, {}, ISearch>): Promise<IProduct[]> => {
@@ -27,7 +27,14 @@ export const getProductsByCategories = async (category: string | undefined): Pro
   throw new Error("Bad Request");
 }
 
-export const updateProductById = async (req: Request<{ id: string }, {}, IProductUpdate>): Promise<string> => {
+export const addNewProduct = async (req: Request<{}, {}, IProductCreate>): Promise<string> => {
+  if (req.body.title && req.body.storeId && req.body.price && req.body.quantity && req.body.category) {
+    return addProduct(req);
+  }
+  throw new Error("Bad Request");
+}
+
+export const updateProductById = async (req: Request<{ id: string }, {}, IProductCreate>): Promise<string> => {
   if (Number(req.params.id)) {
     let query: string = 'UPDATE ProductData SET';
     req.body.title && (query += `title = '${req.body.title}', `);

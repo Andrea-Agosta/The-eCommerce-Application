@@ -1,6 +1,6 @@
-import { deleteProductById, getAllProducts, getAllProductsCategories, getProductsByCategories, updateProductById } from '../controller/productController';
+import { addNewProduct, deleteProductById, getAllProducts, getAllProductsCategories, getProductsByCategories, updateProductById } from '../controller/productController';
 import express, { Request, Response } from 'express';
-import { IProduct, IProductUpdate, ISearch } from 'type/product';
+import { IProduct, IProductCreate, ISearch } from 'type/product';
 import { getProductByID } from '../dbRepository/productRepository';
 import passport from 'passport';
 const router = express.Router();
@@ -42,7 +42,19 @@ router.get('/categories/:categories', async (req: Request, res: Response) => {
   }
 });
 
-router.patch('/:id', passport.authenticate('jwt', { session: false }), async (req: Request<{ id: string }, {}, IProductUpdate>, res: Response) => {
+router.post('/', passport.authenticate('jwt', { session: false }), async (req: Request<{}, {}, IProductCreate>, res: Response) => {
+  try {
+    if (req.body.role !== 'admin') {
+      return res.status(403).send({ message: 'Forbidden access' });
+    }
+    const product: string = await addNewProduct(req);
+    return res.status(200).json(product);
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
+  }
+});
+
+router.patch('/:id', passport.authenticate('jwt', { session: false }), async (req: Request<{ id: string }, {}, IProductCreate>, res: Response) => {
   try {
     if (req.body.role !== 'admin') {
       return res.status(403).send({ message: 'Forbidden access' });
