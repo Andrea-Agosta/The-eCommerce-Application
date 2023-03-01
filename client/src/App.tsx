@@ -11,10 +11,11 @@ import { CategoriesContext } from './context/categories';
 import { CartItemsContext } from './context/cart';
 import { decodeJwt } from './utils/decodeJwt';
 import { UserContext } from './context/user';
-import PrivateRoutes from './utils/privateRoute';
 import { StoreList } from './pages/StoreList';
 import { StoreProducts } from './pages/StoreProducts';
 import { Page404 } from './pages/Page404';
+import AdminRoutes from './utils/AdminRoutes';
+import SuperAdminRoutes from './utils/SuperAdminRoutes';
 
 
 const App = () => {
@@ -58,9 +59,11 @@ const App = () => {
                         <Route path='/category/:category/product/:id'
                             element={<ProductID />}></Route>
 
-                        <Route element={<PrivateRoutes />}>
+                        <Route element={<AdminRoutes />}>
                             <Route path='/admin/store/product'
                                 element={<StoreProducts />}></Route>
+                        </Route>
+                        <Route element={<SuperAdminRoutes />}>
                             <Route path='/admin/store'
                                 element={<StoreList />}></Route>
                         </Route>
