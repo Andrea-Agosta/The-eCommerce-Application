@@ -20,7 +20,7 @@ export const InputGroup = ({ input, handleChange, error }: IPropsInputGroup) => 
         className={inputStyle}
         onChange={handleChange}
       />
-      {error[input] && <p className="text-red-500 text-xs mb-4">*{error[input] === 'quantity' ? "Please insert the quantity value" : error[input]} </p>}
+      {error[input] && <p className="text-red-500 text-xs mb-4">*{error[input] === 2 ? "Please insert the quantity value" : error[input]} </p>}
     </>
   )
 }

@@ -6,11 +6,7 @@ import { Select } from "../../Select";
 import { ButtonGroup } from "../ButtonGroup";
 import { InputGroup } from "../InputGroup";
 
-interface ICloseModal {
-  handleClose: () => void;
-}
-
-export const AddItemForm = ({ handleClose }: ICloseModal) => {
+export const AddItemForm = ({ handleClose }: { handleClose: () => void }) => {
   const formInput = ["title", 'description', 'imageurl', 'price', 'quantity'];
   const [data, setData] = useState<IProduct>({ category: 'baby' } as IProduct);
   const [error, setError] = useState<IProductError>({} as IProductError);
@@ -68,6 +64,5 @@ export const AddItemForm = ({ handleClose }: ICloseModal) => {
       </div>
       <ButtonGroup name='Create' submitData={submitData} handleClose={handleClose} />
     </div>
-
   )
 }
