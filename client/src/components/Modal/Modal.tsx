@@ -5,10 +5,12 @@ import RegistrationForm from './auth/RegistrationForm'
 import LoginForm from './auth/LoginForm'
 import { AddItemForm } from './StoreItemModal/AddItemForm'
 import { UpdateItemForm } from './StoreItemModal/UpdateItemForm'
-import { DeleteItemForm } from './StoreItemModal/DeleteItemForm'
+import { DeleteItem } from './StoreItemModal/DeleteItem'
 import { IProduct } from '../../../../type/product'
+import { DeleteStore } from './StoreItemModal/DeleteStore'
+import { IStore } from '../../../../type/store'
 
-export const Modal = ({ type, product }: { type: string, product: IProduct }) => {
+export const Modal = ({ type, data }: { type: string, data: IProduct | IStore }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
   const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none group";
@@ -33,7 +35,8 @@ export const Modal = ({ type, product }: { type: string, product: IProduct }) =>
           </button>,
           'addProduct': <button className={modalAddItemButton} onClick={() => setOpen(!open)}> + </button>,
           'updateProduct': <Pencil className='text-2xl cursor-pointer hover:text-orange-400' onClick={() => setOpen(!open)} />,
-          'deleteProduct': <Trash3 className='cursor-pointer text-2xl ml-4 hover:text-orange-400' onClick={() => setOpen(!open)} />
+          'deleteProduct': <Trash3 className='cursor-pointer text-2xl ml-4 hover:text-orange-400' onClick={() => setOpen(!open)} />,
+          'deleteStore': <Trash3 className='cursor-pointer text-2xl relative right-5 hover:text-orange-400' onClick={() => setOpen(!open)} />
         }[type]
       }
       <Transition.Root show={open} as={Fragment}>
@@ -78,8 +81,9 @@ export const Modal = ({ type, product }: { type: string, product: IProduct }) =>
                         {isRegistrationButton ? <RegistrationForm handleClose={handleClose} /> : <LoginForm handleClose={handleClose} />}
                       </div>,
                       'addProduct': <AddItemForm handleClose={handleClose} />,
-                      'updateProduct': <UpdateItemForm product={product} handleClose={handleClose} />,
-                      'deleteProduct': <DeleteItemForm product={product} handleClose={handleClose} />,
+                      'updateProduct': <UpdateItemForm product={data as IProduct} handleClose={handleClose} />,
+                      'deleteProduct': <DeleteItem product={data as IProduct} handleClose={handleClose} />,
+                      'deleteStore': <DeleteStore store={data as IStore} handleClose={handleClose} />,
                     }[type]
                   }
                 </Dialog.Panel>

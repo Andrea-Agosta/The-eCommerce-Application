@@ -25,11 +25,18 @@ export const UserMenu = ({ userMenu }: { userMenu: string[] }) => {
           </Menu.Item>
         ))}
       {
-        user.user.role === 'admin' && <Menu.Item>
-          {({ active }) => (
-            <a href='/admin/store/product' className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store </a>
-          )}
-        </Menu.Item>
+        {
+          'admin': <Menu.Item>
+            {({ active }) => (
+              <a href='/admin/store/product' className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store </a>
+            )}
+          </Menu.Item>,
+          'super-admin': <Menu.Item>
+            {({ active }) => (
+              <a href='/admin/store' className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store List</a>
+            )}
+          </Menu.Item>,
+        }[user.user.role]
       }
       <Menu.Item>
         {({ active }) => (

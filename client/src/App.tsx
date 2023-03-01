@@ -59,6 +59,9 @@ const App = () => {
                         <Route path='/category/:category/product/:id'
                             element={<ProductID />}></Route>
 
+                        <Route path='/*' element={<Page404 />} ></Route>
+
+                        {/* protected routes */}
                         <Route element={<AdminRoutes />}>
                             <Route path='/admin/store/product'
                                 element={<StoreProducts />}></Route>
@@ -68,7 +71,6 @@ const App = () => {
                                 element={<StoreList />}></Route>
                         </Route>
 
-                        <Route path='/*' element={<Page404 />} ></Route>
                     </Routes>
                 </div>
                 <Footer />
