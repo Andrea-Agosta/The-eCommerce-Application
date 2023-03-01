@@ -5,7 +5,7 @@ import { UserContext } from '../../context/user';
 import { useContext } from 'react';
 
 
-export const UserDashboard = ({ userMenu }: { userMenu: string[] }) => {
+export const UserMenu = ({ userMenu }: { userMenu: string[] }) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const logout = () => {
@@ -27,7 +27,7 @@ export const UserDashboard = ({ userMenu }: { userMenu: string[] }) => {
       {
         user.user.role === 'admin' && <Menu.Item>
           {({ active }) => (
-            <Link to={'/store'} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store </Link>
+            <a href='/admin/store/product' className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store </a>
           )}
         </Menu.Item>
       }

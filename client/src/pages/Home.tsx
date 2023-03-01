@@ -6,6 +6,7 @@ import { Category } from '../components/products/Category';
 import backgroundImage from '../images/background.jpg';
 // @ts-ignore
 import mobileBackgroundImage from '../images/mobile_background.png';
+import { IProduct } from '../../../type/product';
 
 
 const Hompage = () => {
@@ -17,7 +18,7 @@ const Hompage = () => {
       <img src={backgroundImage} alt='background' className='hidden md:block' />
       <img src={mobileBackgroundImage} alt='background' className='md:hidden' />
       <div className='md:hidden'>
-        {!cookieString && <Modal type='auth' />}
+        {!cookieString && <Modal type='auth' product={{} as IProduct} />}
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:p-4'>
         {categories?.map((category, index) => <Category key={index} category={category} />)}

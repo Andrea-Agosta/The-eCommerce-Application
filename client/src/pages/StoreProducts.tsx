@@ -5,7 +5,7 @@ import { Modal } from '../components/Modal/Modal';
 import Card from '../components/products/Card';
 import { decodeJwt } from '../utils/decodeJwt';
 
-export const Store = () => {
+export const StoreProducts = () => {
   const [productsByStore, setProductsByStore] = useState<IProduct[]>();
   const cookieString = document.cookie;
   const user = decodeJwt(cookieString);

@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Category } from './Category';
 import { PersonCircle } from 'react-bootstrap-icons';
 import { UserContext } from '../../context/user';
-import { UserDashboard } from './UserDashboard';
+import { UserMenu } from './UserMenu';
 
 export const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
@@ -30,7 +30,7 @@ export const Dropdown = ({ props, name }: { props: string[], name: string }) => 
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {(name === 'user' && user.user) ? <UserDashboard userMenu={props} /> : <Category props={props} />}
+          {(name === 'user' && user.user) ? <UserMenu userMenu={props} /> : <Category props={props} />}
         </Menu.Items>
       </Transition>
     </Menu >

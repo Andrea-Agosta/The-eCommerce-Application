@@ -12,12 +12,14 @@ import { CartItemsContext } from './context/cart';
 import { decodeJwt } from './utils/decodeJwt';
 import { UserContext } from './context/user';
 import PrivateRoutes from './utils/privateRoute';
-import { Store } from './pages/Store';
+import { StoreList } from './pages/StoreList';
+import { StoreProducts } from './pages/StoreProducts';
+import { Page404 } from './pages/Page404';
 
 
 const App = () => {
-    const { categories, setCategories } = useContext(CategoriesContext);
-    const { cartItems, setCartItems } = useContext(CartItemsContext);
+    const { setCategories } = useContext(CategoriesContext);
+    const { setCartItems } = useContext(CartItemsContext);
     const { setUser } = useContext(UserContext);
     const cookieString = document.cookie;
 
@@ -49,20 +51,21 @@ const App = () => {
                 <NavBar />
                 <div className="min-h-screen">
                     <Routes>
-
                         <Route path='/'
                             element={<Home />}></Route>
                         <Route path='/category/:category'
                             element={<Product />}></Route>
                         <Route path='/category/:category/product/:id'
                             element={<ProductID />}></Route>
+
                         <Route element={<PrivateRoutes />}>
-                            <Route path='/store'
-                                element={<Store />}></Route>
-                            {/* <Route path='/admin' element={< AdminPage />}></Route>
-                        <Route path='/admin/super' element={< SuperAdminPage />}></Route> */}
+                            <Route path='/admin/store/product'
+                                element={<StoreProducts />}></Route>
+                            <Route path='/admin/store'
+                                element={<StoreList />}></Route>
                         </Route>
 
+                        <Route path='/*' element={<Page404 />} ></Route>
                     </Routes>
                 </div>
                 <Footer />
