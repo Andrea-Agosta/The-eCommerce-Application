@@ -2,7 +2,7 @@ import axios from "axios";
 import { ChangeEvent, useContext, useEffect, useState } from "react"
 import { ICart } from "../../../type/cart";
 import { IProduct } from "../../../type/product";
-import { Count } from "../components/products/Count";
+import { Slider } from "../components/products/Slider";
 import { CartItemsContext } from "../context/cart";
 
 
@@ -64,7 +64,7 @@ const ProductID = () => {
           </div>
           <div className="mt-8">
             <p className="text-orange-400 font-bold text-lg">Select Amount:</p>
-            <Count storage={product?.quantity} handleAmountChange={handleAmountChange} rangeValue={rangeValue} />
+            <Slider storage={product?.quantity} handleAmountChange={handleAmountChange} rangeValue={rangeValue} />
           </div>
           <button className="rounded px-24 py-4 mt-7 bg-white hover:bg-orange-400 border-2 border-orange-400 mb-5 text-orange-400 hover:text-white" onClick={makeOrder}>Order</button>
         </div>

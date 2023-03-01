@@ -1,18 +1,18 @@
 import { ChangeEvent } from "react";
 
-interface ICount {
+interface ISlider {
   storage: number | undefined;
   handleAmountChange(event: ChangeEvent<HTMLInputElement>): void;
   rangeValue: number | undefined;
 }
 
-export const Count = ({ storage, handleAmountChange, rangeValue }: ICount) => {
+export const Slider = ({ storage, handleAmountChange, rangeValue }: ISlider) => {
   return (
     <div className="flex flex-row">
       <input
         type="range"
         className="mt-5 w-full h-6 p-0 focus:outline-none focus:ring-0 accent-orange-400"
-        min="range"
+        min="1"
         max={storage}
         step="1"
         defaultValue={rangeValue}

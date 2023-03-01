@@ -6,6 +6,7 @@ import { Modal } from './Modal/Modal';
 import { Dropdown } from './Dropdown/Dropdown';
 import { CartMenu } from './checkout/CartMenu';
 import { useNavigate } from 'react-router-dom';
+import { IProduct } from '../../../type/product';
 
 function NavBar() {
   const { categories } = useContext(CategoriesContext);
@@ -48,14 +49,14 @@ function NavBar() {
           <form className='mt-4 md:mt-0'>
             <div className="flex flex-row w-full border rounded-lg border-gray-300 bg-[#f2f2f2]">
               <div className='border-r'>
-                <Select handleCategoryChange={handleCategoryChange} name='search' />
+                <Select handleCategoryChange={handleCategoryChange} name='search' selected='' />
               </div>
               <Search className='text-3xl pt-2 ml-3 text-[#757575]' />
               <input type="search" id="search-dropdown" className="block p-2.5 w-full z-5 text-sm placeholder:text-[#757575] bg-[#f2f2f2] rounded-r-lg focus:outline-none focus:ring-0 focus:border-transparent border-0" placeholder="Search for items" required onChange={e => setSearch(e.currentTarget.value)} onKeyDown={event => submitWithEnterKey(event)} />
             </div>
           </form>
           <div className="items-center hidden md:flex flex-row">
-            {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' />}
+            {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' product={{} as IProduct} />}
             <CartMenu />
           </div>
         </div>
@@ -64,12 +65,12 @@ function NavBar() {
         <div className="max-w-screen-xl px-4 py-3 mx-auto md:px-6" >
           <div className="flex flex-col md:flex-row md:items-center">
             <span className='block md:hidden'>
-              {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' />}
+              {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' product={{} as IProduct} />}
             </span>
             <ul className="flex flex-col mt-0 mr-lg-6 space-y-3 text-sm font-medium md:hidden">
               {categories.map((category, index) => <li key={index}><a href={`/category/${category}`} className="text-gray-900 hover:underline items-start">{category}</a></li>)}
             </ul>
-            <ul className="hidden md:flex flex-row mt-0 mr-lg-6 space-x-8 space-y-3 text-sm font-medium">
+            <ul className="hidden md:flex flex-row mt-0 lg:mr-6 space-x-8 text-sm font-medium">
               {categories.slice(0, 7).map((category, index) => <li key={index}><a href={`/category/${category}`} className="text-gray-900 hover:underline">{category}</a></li>)}
             </ul>
             <div className='ml-10 hidden md:block'>

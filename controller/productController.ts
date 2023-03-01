@@ -36,14 +36,14 @@ export const addNewProduct = async (req: Request<{}, {}, IProductCreate>): Promi
 
 export const updateProductById = async (req: Request<{ id: string }, {}, IProductCreate>): Promise<string> => {
   if (Number(req.params.id)) {
-    let query: string = 'UPDATE ProductData SET';
+    let query: string = 'UPDATE ProductData SET ';
     req.body.title && (query += `title = '${req.body.title}', `);
     req.body.description && (query += `description = '${req.body.description}', `);
     req.body.imageurl && (query += `imageUrl = '${req.body.imageurl}', `);
     req.body.price && (query += `price = '${req.body.price}', `);
-    req.body.quantity && (query += `quantity = '${req.body.quantity}', `);
-    req.body.category && (query += `category = '${req.body.category}', `);
-    query += `WHERE id = '${req.params.id}'`;
+    req.body.quantity && (query += `quantity = ${req.body.quantity}, `);
+    req.body.category && (query += `category = '${req.body.category}' `);
+    query += `WHERE id = ${req.params.id}`;
     return await updateProduct(query);
   }
   throw new Error(`User ${req.params.id} does not exist`);

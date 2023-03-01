@@ -30,7 +30,6 @@ const Product = () => {
         .then(res => setProducts(res.data))
         .catch(err => console.error(err))
     } else {
-      console.log('here')
       const category = pathname.split('/')[pathname.split('/').length - 1];
       axios({
         method: 'get',
@@ -50,7 +49,7 @@ const Product = () => {
         {
           products.length ?
             <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
-              {products.map((product, index) => <Card key={index} product={product} />)}
+              {products.map((product, index) => <Card key={index} product={product} page='product' />)}
             </div>
             :
             <h2 className='text-2xl text-center mt-28'>Sorry, but the Item is not Avaleible</h2>

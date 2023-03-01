@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState, MouseEvent } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { IBodyUserLogin, IRegistrationUser } from "../../../../../type/user";
 import { UserContext } from "../../../context/user";
 import axios from 'axios';
@@ -44,7 +44,7 @@ function LoginForm({ handleClose }: { handleClose: () => void }) {
   return (
     <>
       <section className="flex flex-col p-5">
-        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} />)}
+        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} defaltValue='' />)}
         {error?.userNotFound && <p className="text-red-500 text-sm text-center p-3 border-y border-red-500 bg-red-100 mb-3"> {error.userNotFound} </p>}
       </section>
       <ButtonGroup name='LogIn' submitData={submitData} handleClose={handleClose} />

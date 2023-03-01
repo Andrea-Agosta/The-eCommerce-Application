@@ -6,11 +6,7 @@ import { Select } from "../../Select";
 import { ButtonGroup } from "../ButtonGroup";
 import { InputGroup } from "../InputGroup";
 
-interface ICloseModal {
-  handleClose: () => void;
-}
-
-export const AddItemForm = ({ handleClose }: ICloseModal) => {
+export const AddItemForm = ({ handleClose }: { handleClose: () => void }) => {
   const formInput = ["title", 'description', 'imageurl', 'price', 'quantity'];
   const [data, setData] = useState<IProduct>({ category: 'baby' } as IProduct);
   const [error, setError] = useState<IProductError>({} as IProductError);
@@ -39,7 +35,7 @@ export const AddItemForm = ({ handleClose }: ICloseModal) => {
           description: data.description,
           imageurl: data.imageurl,
           storeId: cookieInfo.user.storeId,
-          price: data.price,
+          price: `$ ${data.price}`,
           quantity: data.quantity,
           category: data.category,
         },
@@ -62,12 +58,11 @@ export const AddItemForm = ({ handleClose }: ICloseModal) => {
     <div className='p-5'>
       <h2 className='border-b'>Add new Item</h2>
       <div className="flex flex-col pt-2 pb-4">
-        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} />)}
+        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} defaltValue='' />)}
         <label htmlFor='category'>Category:</label>
-        <Select handleCategoryChange={handleCategoryChange} name='category' />
+        <Select handleCategoryChange={handleCategoryChange} name='category' selected='' />
       </div>
       <ButtonGroup name='Create' submitData={submitData} handleClose={handleClose} />
     </div>
-
   )
 }

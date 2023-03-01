@@ -36,7 +36,7 @@ router.post('/login', async (req, res, next) => {
           throw new Error('Missing TOP_SECRET environment variable');
         }
         const token = jwt.sign({ user: body }, process.env.TOP_SECRET, { expiresIn: '1h' });
-        return res.cookie('auth', token).send('cookie set');
+        return res.cookie('auth', token, { maxAge: 60 * 60 * 1000 }).send('cookie set');
       });
     } catch (error) {
       return next(error);
