@@ -10,11 +10,7 @@ export default function Card({ product, page }: { product: IProduct, page: strin
         to={`/category/${product.category}/product/${product.id}`}
       >
         <figure className="overflow-hidden rounded-lg" >
-          <img
-            src={product.imageurl}
-            alt={'title'}
-            className='h-44'
-          />
+          <img src={product.imageurl} alt={'title'} className='h-44' />
         </figure>
         <div className="h-36">
           <p className="mt-3 text-lg text-black font-bold"> {product.price} </p>

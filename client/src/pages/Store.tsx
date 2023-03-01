@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
-import { Trash3 } from 'react-bootstrap-icons';
 import { IProduct } from '../../../type/product';
 import { Modal } from '../components/Modal/Modal';
 import Card from '../components/products/Card';
@@ -33,7 +32,7 @@ export const Store = () => {
       </div>
 
       <div className='fixed z-20 bottom-10 right-4 md:right-10 '>
-        <Modal type='addProduct' product={null} />
+        <Modal type='addProduct' product={{} as IProduct} />
       </div>
 
       <section className='m-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 place-items-center'>

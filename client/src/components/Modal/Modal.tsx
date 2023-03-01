@@ -8,7 +8,7 @@ import { UpdateItemForm } from './StoreItemModal/UpdateItemForm'
 import { DeleteItemForm } from './StoreItemModal/DeleteItemForm'
 import { IProduct } from '../../../../type/product'
 
-export const Modal = ({ type, product }: { type: string, product: IProduct | null }) => {
+export const Modal = ({ type, product }: { type: string, product: IProduct }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
   const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none group";
@@ -78,8 +78,8 @@ export const Modal = ({ type, product }: { type: string, product: IProduct | nul
                         {isRegistrationButton ? <RegistrationForm handleClose={handleClose} /> : <LoginForm handleClose={handleClose} />}
                       </div>,
                       'addProduct': <AddItemForm handleClose={handleClose} />,
-                      'updateProduct': <UpdateItemForm handleClose={handleClose} />,
-                      'deleteProduct': <DeleteItemForm handleClose={handleClose} />,
+                      'updateProduct': <UpdateItemForm product={product} handleClose={handleClose} />,
+                      'deleteProduct': <DeleteItemForm product={product} handleClose={handleClose} />,
                     }[type]
                   }
                 </Dialog.Panel>

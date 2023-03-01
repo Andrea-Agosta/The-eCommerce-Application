@@ -82,7 +82,7 @@ function NewUserForm({ handleClose }: IRegistrationState) {
   return (
     <>
       <section className="flex flex-col p-3">
-        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} />)}
+        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} defaltValue='' />)}
         <label htmlFor="role">Role:</label>
         <select className={inputStyle} placeholder={"user"} id={"role"} onChange={(e) => handleChange(e)}>
           <option value={"user"}>User</option>

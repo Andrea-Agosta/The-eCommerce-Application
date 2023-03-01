@@ -30,7 +30,6 @@ const Product = () => {
         .then(res => setProducts(res.data))
         .catch(err => console.error(err))
     } else {
-      console.log('here')
       const category = pathname.split('/')[pathname.split('/').length - 1];
       axios({
         method: 'get',

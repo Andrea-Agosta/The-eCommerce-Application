@@ -35,7 +35,7 @@ export const AddItemForm = ({ handleClose }: { handleClose: () => void }) => {
           description: data.description,
           imageurl: data.imageurl,
           storeId: cookieInfo.user.storeId,
-          price: data.price,
+          price: `$ ${data.price}`,
           quantity: data.quantity,
           category: data.category,
         },
@@ -58,9 +58,9 @@ export const AddItemForm = ({ handleClose }: { handleClose: () => void }) => {
     <div className='p-5'>
       <h2 className='border-b'>Add new Item</h2>
       <div className="flex flex-col pt-2 pb-4">
-        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} />)}
+        {formInput.map((input, index) => <InputGroup key={index} input={input} handleChange={handleChange} error={error} defaltValue='' />)}
         <label htmlFor='category'>Category:</label>
-        <Select handleCategoryChange={handleCategoryChange} name='category' />
+        <Select handleCategoryChange={handleCategoryChange} name='category' selected='' />
       </div>
       <ButtonGroup name='Create' submitData={submitData} handleClose={handleClose} />
     </div>
