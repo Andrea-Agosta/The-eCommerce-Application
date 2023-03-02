@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    if (req.body.role !== 'super-admin') {
+    if (req.query.role !== 'super-admin') {
       return res.status(403).send({ message: 'Forbidden access' });
     }
     const store: IStore[] = await getAllStores();

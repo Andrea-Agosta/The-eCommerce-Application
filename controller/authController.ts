@@ -16,7 +16,7 @@ passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField
       if (req.body.role === 'admin') {
         if (req.body.storeName) {
           const store = await addStore(req.body.storeName);
-          const user = store[0] && await createAdminUser(email, hashPassword, req.body.role, store[0].uniqueStoreId);
+          const user = store[0] && await createAdminUser(email, hashPassword, req.body.role, store[0].uniquestoreid);
           if (!user) {
             throw new Error('Bad request');
           }

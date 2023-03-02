@@ -1,15 +1,18 @@
 import { Menu } from '@headlessui/react'
 import { classNames } from './Dropdown'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/user';
 import { useContext } from 'react';
+import { IUserState } from '../../../../type/user';
 
 
-export const UserDashboard = ({ userMenu }: { userMenu: string[] }) => {
+export const UserMenu = ({ userMenu }: { userMenu: string[] }) => {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
   const logout = () => {
     document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setUser({} as IUserState);
     navigate('/');
     window.location.reload();
   }
@@ -25,11 +28,18 @@ export const UserDashboard = ({ userMenu }: { userMenu: string[] }) => {
           </Menu.Item>
         ))}
       {
-        user.user.role === 'admin' && <Menu.Item>
-          {({ active }) => (
-            <Link to={'/store'} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store </Link>
-          )}
-        </Menu.Item>
+        {
+          'admin': <Menu.Item>
+            {({ active }) => (
+              <a href={`/admin/store/${user.user.storeId}`} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store </a>
+            )}
+          </Menu.Item>,
+          'super-admin': <Menu.Item>
+            {({ active }) => (
+              <a href='/admin/store' className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} > Store List</a>
+            )}
+          </Menu.Item>,
+        }[user.user.role]
       }
       <Menu.Item>
         {({ active }) => (

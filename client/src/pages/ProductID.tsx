@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangeEvent, useContext, useEffect, useState } from "react"
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { ICart } from "../../../type/cart";
 import { IProduct } from "../../../type/product";
 import { Slider } from "../components/products/Slider";
@@ -16,25 +16,23 @@ const ProductID = () => {
 
   const makeOrder = () => {
     if (product) {
-      const cartItemIndex: number = cartItems.findIndex(item => item.product === product);
+      const cartItemIndex: number = cartItems.findIndex(item => item.product.id === product.id);
+      const price: string = `${product.price.charAt(0)} ${(rangeValue * Number(product.price.slice(1, product.price.length))).toFixed(2)}`
       if (cartItemIndex !== -1) {
         const updatedCartItems: ICart[] = [...cartItems];
         updatedCartItems[cartItemIndex].quantity += rangeValue;
+        updatedCartItems[cartItemIndex].total = price;
         setCartItems(updatedCartItems);
       } else {
-        setCartItems(prevState => [...prevState, { quantity: rangeValue, product: product }]);
+        setCartItems(prevState => [...prevState, { quantity: rangeValue, product: product, total: price }]);
       }
     }
   }
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/api/product/categories/${category}/${id}`,
-    })
+    axios({ method: 'get', url: `http://localhost:8080/api/product/categories/${category}/${id}` })
       .then(async response => await setProduct(response.data[0]));
     localStorage.setItem('cart', JSON.stringify(cartItems));
-
   }, [cartItems]);
 
   return (
