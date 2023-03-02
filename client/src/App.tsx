@@ -16,68 +16,65 @@ import { StoreProducts } from './pages/StoreProducts';
 import { Page404 } from './pages/Page404';
 import AdminRoutes from './utils/AdminRoutes';
 import SuperAdminRoutes from './utils/SuperAdminRoutes';
+import { Checkout } from './pages/Checkout';
+import LoggedUserRoutes from './utils/LoggedUserRoutes';
 
 
 const App = () => {
-    const { setCategories } = useContext(CategoriesContext);
-    const { setCartItems } = useContext(CartItemsContext);
-    const { setUser } = useContext(UserContext);
-    const cookieString = document.cookie;
+  const { setCategories } = useContext(CategoriesContext);
+  const { cartItems, setCartItems } = useContext(CartItemsContext);
+  const { setUser } = useContext(UserContext);
+  const cookieString = document.cookie;
 
-    useEffect(() => {
-        if (cookieString) {
-            const data = decodeJwt(cookieString);
-            setUser(data);
-        }
-        axios({
-            method: 'get',
-            url: `http://localhost:8080/api/product/categories`,
-        })
-            .then(async response => {
-                const categoriesList: string[] = response.data.map((category: ICategory) => category.category);
-                setCategories(categoriesList);
-            })
-            .catch(err => console.log(err));
+  useEffect(() => {
+    if (cookieString) {
+      const data = decodeJwt(cookieString);
+      setUser(data);
+    }
+    axios({ method: 'get', url: `http://localhost:8080/api/product/categories` })
+      .then(async response => {
+        const categoriesList: string[] = response.data.map((category: ICategory) => category.category);
+        setCategories(categoriesList);
+      })
+      .catch(err => console.log(err));
+    const cart = localStorage.getItem('cart');
+    if (cart !== null) {
+      const items = JSON.parse(cart);
+      setCartItems(items);
+    }
+  }, []);
 
-        const cart = localStorage.getItem('cart');
-        if (cart !== null) {
-            const items = JSON.parse(cart);
-            setCartItems(items);
-        }
-    }, []);
+  return (
+    <div className="max-w-screen-lg mx-auto bg-white">
+      <Router>
+        <NavBar />
+        <div className="min-h-screen">
+          <Routes>
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/category/:category' element={<Product />}></Route>
+            <Route path='/category/:category/product/:id' element={<ProductID />}></Route>
+            <Route path='/*' element={<Page404 />} ></Route>
 
-    return (
-        <div className="max-w-screen-lg mx-auto bg-white">
-            <Router>
-                <NavBar />
-                <div className="min-h-screen">
-                    <Routes>
-                        <Route path='/'
-                            element={<Home />}></Route>
-                        <Route path='/category/:category'
-                            element={<Product />}></Route>
-                        <Route path='/category/:category/product/:id'
-                            element={<ProductID />}></Route>
+            {/* protected routes */}
+            <Route element={<LoggedUserRoutes />}>
+              <Route path='/checkout' element={<Checkout />}></Route>
+            </Route>
 
-                        <Route path='/*' element={<Page404 />} ></Route>
+            <Route element={<AdminRoutes />}>
+              <Route path='/admin/store/:id' element={<StoreProducts />}></Route>
+            </Route>
 
-                        {/* protected routes */}
-                        <Route element={<AdminRoutes />}>
-                            <Route path='/admin/store/:id'
-                                element={<StoreProducts />}></Route>
-                        </Route>
-                        <Route element={<SuperAdminRoutes />}>
-                            <Route path='/admin/store' element={<StoreList />}>
-                                {/* <Route path='/admin/store/:id' element={<StoreProducts />}></Route> */}
-                            </Route>
-                        </Route>
-
-                    </Routes>
-                </div>
-                <Footer />
-            </Router>
+            <Route element={<SuperAdminRoutes />}>
+              <Route path='/admin/store' element={<StoreList />}>
+                <Route path='/admin/store/:id' element={<StoreProducts />}></Route>
+              </Route>
+            </Route>
+          </Routes>
         </div>
-    )
+        <Footer />
+      </Router>
+    </div>
+  )
 }
 
 export default App;

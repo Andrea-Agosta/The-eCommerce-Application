@@ -4,7 +4,7 @@ import { CategoriesContext } from '../context/categories';
 import { Select } from './Select';
 import { Modal } from './Modal/Modal';
 import { Dropdown } from './Dropdown/Dropdown';
-import { CartMenu } from './checkout/CartMenu';
+import { CartMenu } from './checkout/cart/CartMenu';
 import { useNavigate } from 'react-router-dom';
 import { IProduct } from '../../../type/product';
 

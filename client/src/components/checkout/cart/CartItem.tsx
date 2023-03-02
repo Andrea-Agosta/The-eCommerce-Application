@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Trash3 } from 'react-bootstrap-icons';
-import { ICart } from '../../../../type/cart';
-import { CartItemsContext } from '../../context/cart';
+import { ICart } from '../../../../../type/cart';
+import { CartItemsContext } from '../../../context/cart';
 
 
 export const CartItem = ({ item }: { item: ICart }) => {
@@ -23,7 +23,7 @@ export const CartItem = ({ item }: { item: ICart }) => {
           <h2 className='break-words border-b font-bold'> {item.product.title}</h2>
           <h3>Amount:  {item.quantity}</h3>
           <div className='flex justify-between'>
-            <h3> Price: {`${item.product.price.charAt(0)} ${(item.quantity * Number(item.product.price.slice(1, item.product.price.length))).toFixed(2)}`}</h3>
+            <h3> Price: {item.total}</h3>
             <button className='md:hidden' onClick={() => deleteCartItem()}><Trash3 className='text-lg' /></button>
           </div>
         </section>
