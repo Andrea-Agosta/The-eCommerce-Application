@@ -9,23 +9,23 @@ import { DeleteItem } from './StoreItemModal/DeleteItem'
 import { IProduct } from '../../../../type/product'
 import { DeleteStore } from './StoreItemModal/DeleteStore'
 import { IStore } from '../../../../type/store'
+import { AuthModalBody } from './auth/AuthModalBody'
 
 export const Modal = ({ type, data }: { type: string, data: IProduct | IStore }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
-  const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 text:xl w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none group";
+  const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none group";
   const modalAddItemButton = "text-4xl font-bold text-white bg-black rounded-full w-14 h-14 pb-1 hover:bg-orange-400";
+  const modalCheckoutButton = "p-3 p-lg-1 px-3 bg-white text-violet-500 hover:text-orange-400 w-11/12 my-5 mx-3 border-2 rounded-md border-violet-400 hover:border-orange-400 flex justify-center"
 
   const handleClose = () => setOpen(false);
+  const buttonClick = (event: React.MouseEvent<HTMLButtonElement>) => event.currentTarget.name === 'registation' ? setIsRegistrationButton(true) : setIsRegistrationButton(false);
 
   return (
     <>
       {
         {
-          'auth': <button
-            className={modalAuthButton}
-            onClick={() => setOpen(!open)}
-          >
+          'auth': <button className={modalAuthButton} onClick={() => setOpen(!open)}>
             <span className="flex">
               <PersonCircle className='text-4xl mt-0 md:mt-1 mr-4 md:mr-2 text-orange-400 md:text-gray-700 group-hover:text-orange-400' />
               <div className='flex flex-row md:flex-col text-left mt-1 md:mt-0 group-hover:text-orange-400'>Sign up
@@ -36,7 +36,11 @@ export const Modal = ({ type, data }: { type: string, data: IProduct | IStore })
           'addProduct': <button className={modalAddItemButton} onClick={() => setOpen(!open)}> + </button>,
           'updateProduct': <Pencil className='text-2xl cursor-pointer hover:text-orange-400' onClick={() => setOpen(!open)} />,
           'deleteProduct': <Trash3 className='cursor-pointer text-2xl ml-4 hover:text-orange-400' onClick={() => setOpen(!open)} />,
-          'deleteStore': <Trash3 className='cursor-pointer text-2xl relative right-5 hover:text-orange-400' onClick={() => setOpen(!open)} />
+          'deleteStore': <Trash3 className='cursor-pointer text-2xl relative right-5 hover:text-orange-400' onClick={() => setOpen(!open)} />,
+          'checkout': <button className={modalCheckoutButton} onClick={() => setOpen(!open)} >
+            <PersonCircle className='text-4xl mt-0 mr-4 group-hover:text-orange-400' />
+            <div className='flex flex-row text-left mt-1 group-hover:text-orange-400'>Sign up or Log In</div>
+          </button>,
         }[type]
       }
       <Transition.Root show={open} as={Fragment}>
@@ -67,23 +71,12 @@ export const Modal = ({ type, data }: { type: string, data: IProduct | IStore })
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-lg">
                   {
                     {
-                      'auth': <div className="bg-white pt-5 sm:p-6 sm:pb-4 px-2 pb-0">
-                        <div className='flex flex-row'>
-                          <button
-                            className={`bg-white  hover:text-orange-400 text:xl w-full py-2 ${isRegistrationButton ? 'text-gray-700 border-b' : 'border border-b-0 rounded-t-lg text-orange-400'}`}
-                            onClick={() => setIsRegistrationButton(false)}
-                          > Login</button>
-                          <button
-                            className={`bg-white hover:text-orange-400 text:xl w-full py-2 ${isRegistrationButton ? 'border border-b-0 rounded-t-lg text-orange-400' : 'border-b  text-gray-700'}`}
-                            onClick={() => setIsRegistrationButton(true)}
-                          > Registration </button>
-                        </div>
-                        {isRegistrationButton ? <RegistrationForm handleClose={handleClose} /> : <LoginForm handleClose={handleClose} />}
-                      </div>,
+                      'auth': <AuthModalBody handleClose={handleClose} buttonClick={buttonClick} isRegistrationButton={isRegistrationButton} />,
                       'addProduct': <AddItemForm handleClose={handleClose} />,
                       'updateProduct': <UpdateItemForm product={data as IProduct} handleClose={handleClose} />,
                       'deleteProduct': <DeleteItem product={data as IProduct} handleClose={handleClose} />,
                       'deleteStore': <DeleteStore store={data as IStore} handleClose={handleClose} />,
+                      'checkout': <AuthModalBody handleClose={handleClose} buttonClick={buttonClick} isRegistrationButton={isRegistrationButton} />,
                     }[type]
                   }
                 </Dialog.Panel>

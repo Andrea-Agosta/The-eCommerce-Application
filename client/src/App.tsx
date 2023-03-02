@@ -63,12 +63,13 @@ const App = () => {
 
                         {/* protected routes */}
                         <Route element={<AdminRoutes />}>
-                            <Route path='/admin/store/product'
+                            <Route path='/admin/store/:id'
                                 element={<StoreProducts />}></Route>
                         </Route>
                         <Route element={<SuperAdminRoutes />}>
-                            <Route path='/admin/store'
-                                element={<StoreList />}></Route>
+                            <Route path='/admin/store' element={<StoreList />}>
+                                {/* <Route path='/admin/store/:id' element={<StoreProducts />}></Route> */}
+                            </Route>
                         </Route>
 
                     </Routes>

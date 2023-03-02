@@ -56,7 +56,7 @@ function NavBar() {
             </div>
           </form>
           <div className="items-center hidden md:flex flex-row">
-            {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' product={{} as IProduct} />}
+            {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' data={{} as IProduct} />}
             <CartMenu />
           </div>
         </div>
@@ -65,7 +65,7 @@ function NavBar() {
         <div className="max-w-screen-xl px-4 py-3 mx-auto md:px-6" >
           <div className="flex flex-col md:flex-row md:items-center">
             <span className='block md:hidden'>
-              {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' product={{} as IProduct} />}
+              {document.cookie ? <Dropdown props={userMenu} name={'user'} /> : <Modal type='auth' data={{} as IProduct} />}
             </span>
             <ul className="flex flex-col mt-0 mr-lg-6 space-y-3 text-sm font-medium md:hidden">
               {categories.map((category, index) => <li key={index}><a href={`/category/${category}`} className="text-gray-900 hover:underline items-start">{category}</a></li>)}

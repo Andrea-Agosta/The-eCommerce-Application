@@ -32,7 +32,7 @@ export const StoreProducts = () => {
       </div>
 
       <div className='fixed z-20 bottom-10 right-4 md:right-10 '>
-        <Modal type='addProduct' product={{} as IProduct} />
+        <Modal type='addProduct' data={{} as IProduct} />
       </div>
 
       <section className='m-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 place-items-center'>

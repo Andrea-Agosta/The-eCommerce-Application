@@ -4,7 +4,7 @@ import { decodeJwt } from './decodeJwt';
 const AdminRoutes = () => {
   const cookieString = document.cookie;
   const cookieInfo = decodeJwt(cookieString);
-  return cookieInfo.user.role === 'admin' ? <Outlet /> : <Navigate to="/" />
+  return (cookieInfo.user.role === 'admin' || cookieInfo.user.role === 'super-admin') ? <Outlet /> : <Navigate to="/" />
 }
 
 export default AdminRoutes;

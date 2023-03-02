@@ -4,11 +4,17 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Cart4 } from 'react-bootstrap-icons'
 import { CartItemsContext } from '../../context/cart'
 import { CartItem } from './CartItem'
+import { UserContext } from '../../context/user'
+import { Modal } from '../Modal/Modal'
+import { IProduct } from '../../../../type/product'
+import { Link } from 'react-router-dom'
 
 export const CartMenu = () => {
   const [open, setOpen] = useState(false)
   const { cartItems } = useContext(CartItemsContext);
-  const [numberItems, setNumberItems] = useState<number>(0)
+  const [numberItems, setNumberItems] = useState<number>(0);
+  const { user } = useContext(UserContext);
+
 
   const setNumberOfItemsOnCart = async () => {
     let countItems = 0
@@ -19,6 +25,7 @@ export const CartMenu = () => {
   useEffect(() => {
     setNumberOfItemsOnCart().then(resp => setNumberItems(resp))
   }, [cartItems])
+
   return (
     <>
       <button onClick={() => setOpen(true)}>
@@ -76,9 +83,14 @@ export const CartMenu = () => {
                         <Dialog.Title className="text-lg font-medium text-gray-900 flex justify-between">Your Cart <Cart4 className='mt-1' /></Dialog.Title>
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6 border-t-2">
-                        {
-                          cartItems.map((item, index) => <CartItem key={index} item={item} />)
-                        }
+                        {cartItems.map((item, index) => <CartItem key={index} item={item} />)}
+                      </div>
+                      <div className='border-t-2 '>
+                        <div className='flex font-bold justify-between p-5 pb-0'>
+                          <h3>Total</h3>
+                          <h3> $ 5000</h3>
+                        </div>
+                        {user.user ? <Link to={'/checkout'}>Checkout</Link> : <Modal type='checkout' data={{} as IProduct} />}
                       </div>
                     </div>
                   </Dialog.Panel>
