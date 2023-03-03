@@ -9,8 +9,8 @@ export const CheckoutDeliveryInfo = () => {
         <label htmlFor="textarea" className="block text-gray-700 font-bold mb-2"> More info: </label>
         <textarea
           id="textarea"
-          name="name"
-          placeholder="John Doe"
+          name="info"
+          placeholder="Add more info"
           className="w-full px-3 py-2 text-gray-700 border rounded"
         />
       </div>
