@@ -16,7 +16,7 @@ export const Modal = ({ type, data }: { type: string, data: IProduct | IStore })
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
   const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none group";
   const modalAddItemButton = "text-4xl font-bold text-white bg-black rounded-full w-14 h-14 pb-1 hover:bg-orange-400";
-  const modalCheckoutButton = "p-3 p-lg-1 px-3 bg-white text-violet-500 hover:text-orange-400 w-11/12 my-5 mx-3 border-2 rounded-md border-violet-400 hover:border-orange-400 flex justify-center"
+  const modalCheckoutButton = "p-3 p-lg-1 px-3 bg-white text-violet-500 hover:text-orange-400 w-11/12 my-5 mx-3 border-2 rounded-md border-violet-400 hover:border-orange-400 flex justify-center md:text-orange-400 md:border-orange-400 md:hover:bg-orange-400 md:hover:text-white"
 
   const handleClose = () => setOpen(false);
   const buttonClick = (event: React.MouseEvent<HTMLButtonElement>) => event.currentTarget.name === 'registation' ? setIsRegistrationButton(true) : setIsRegistrationButton(false);

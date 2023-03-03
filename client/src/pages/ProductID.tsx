@@ -30,10 +30,14 @@ const ProductID = () => {
   }
 
   useEffect(() => {
+    const storedCartItems = localStorage.getItem('cart');
+    storedCartItems && setCartItems(JSON.parse(storedCartItems));
+  }, []);
+
+  useEffect(() => {
     axios({ method: 'get', url: `http://localhost:8080/api/product/categories/${category}/${id}` })
       .then(async response => await setProduct(response.data[0]));
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-  }, [cartItems]);
+  }, [id]);
 
   return (
     <>
