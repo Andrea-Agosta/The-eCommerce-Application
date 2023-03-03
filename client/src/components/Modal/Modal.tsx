@@ -1,8 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Pencil, PersonCircle, Trash3 } from 'react-bootstrap-icons'
-import RegistrationForm from './auth/RegistrationForm'
-import LoginForm from './auth/LoginForm'
 import { AddItemForm } from './StoreItemModal/AddItemForm'
 import { UpdateItemForm } from './StoreItemModal/UpdateItemForm'
 import { DeleteItem } from './StoreItemModal/DeleteItem'
@@ -10,8 +8,10 @@ import { IProduct } from '../../../../type/product'
 import { DeleteStore } from './StoreItemModal/DeleteStore'
 import { IStore } from '../../../../type/store'
 import { AuthModalBody } from './auth/AuthModalBody'
+import { IUser } from '../../../../type/user'
+import { UpdateUserData } from './auth/UpdateUserData'
 
-export const Modal = ({ type, data }: { type: string, data: IProduct | IStore }) => {
+export const Modal = ({ type, data }: { type: string, data: IProduct | IStore | IUser }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isRegistrationButton, setIsRegistrationButton] = useState<boolean>(false);
   const modalAuthButton: string = "p-3 p-lg-1 px-3 bg-white text-violet-500 md:text-black hover:text-orange-400 w-11/12 my-5 mx-3 md:my-0 border-2 rounded-md border-violet-400 md:border-gray-700 hover:border-orange-400 md:border-none group";
@@ -37,10 +37,11 @@ export const Modal = ({ type, data }: { type: string, data: IProduct | IStore })
           'updateProduct': <Pencil className='text-2xl cursor-pointer hover:text-orange-400' onClick={() => setOpen(!open)} />,
           'deleteProduct': <Trash3 className='cursor-pointer text-2xl ml-4 hover:text-orange-400' onClick={() => setOpen(!open)} />,
           'deleteStore': <Trash3 className='cursor-pointer text-2xl relative right-5 hover:text-orange-400' onClick={() => setOpen(!open)} />,
-          'checkout': <button className={modalCheckoutButton} onClick={() => setOpen(!open)} >
+          'checkout': <button className={modalCheckoutButton} onClick={() => setOpen(!open)} >,
             <PersonCircle className='text-4xl mt-0 mr-4 group-hover:text-orange-400' />
             <div className='flex flex-row text-left mt-1 group-hover:text-orange-400'>Sign up or Log In</div>
           </button>,
+          // 'user': <button className='text-gray-700 block px-4 py-2 text-sm' onClick={() => setOpen(!open)} > Edit Profile </button>,
         }[type]
       }
       <Transition.Root show={open} as={Fragment}>
@@ -77,6 +78,7 @@ export const Modal = ({ type, data }: { type: string, data: IProduct | IStore })
                       'deleteProduct': <DeleteItem product={data as IProduct} handleClose={handleClose} />,
                       'deleteStore': <DeleteStore store={data as IStore} handleClose={handleClose} />,
                       'checkout': <AuthModalBody handleClose={handleClose} buttonClick={buttonClick} isRegistrationButton={isRegistrationButton} />,
+                      // 'user': <UpdateUserData handleClose={handleClose} />,
                     }[type]
                   }
                 </Dialog.Panel>

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/user';
 import { useContext } from 'react';
 import { IUserState } from '../../../../type/user';
+import { IProduct } from '../../../../type/product';
+import { Modal } from '../Modal/Modal';
 
 
 export const UserMenu = ({ userMenu }: { userMenu: string[] }) => {
@@ -21,12 +23,14 @@ export const UserMenu = ({ userMenu }: { userMenu: string[] }) => {
     <div className="py-1">
       {
         userMenu.map((user, index) => (
-          <Menu.Item key={index}>
+          <Menu.Item key={index} >
             {({ active }) => (
-              <a href={`/${user}`} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>{user} </a>
+              user === 'Edit Profile' ? <Modal type='user' data={{} as IProduct} />
+                : <a href={`/${user}`} className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>{user} </a>
             )}
           </Menu.Item>
-        ))}
+        ))
+      }
       {
         {
           'admin': <Menu.Item>
@@ -46,6 +50,6 @@ export const UserMenu = ({ userMenu }: { userMenu: string[] }) => {
           <button className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')} onClick={logout} >Log Out</button>
         )}
       </Menu.Item>
-    </div>
+    </div >
   )
 }

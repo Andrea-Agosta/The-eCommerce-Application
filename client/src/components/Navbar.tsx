@@ -13,7 +13,7 @@ function NavBar() {
   const [isClicked, setIsClicked] = useState<string>('hidden md:block');
   const [search, setSearch] = useState<string>('');
   const [searchCategory, setSearchCategory] = useState<string>('All');
-  const userMenu: string[] = ['Edit Profile', 'history'];
+  const userMenu: string[] = ['Edit Profile'];
   const navigate = useNavigate();
 
   const handleClick = () => {
