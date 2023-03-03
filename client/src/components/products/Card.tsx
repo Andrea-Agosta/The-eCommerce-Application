@@ -20,8 +20,8 @@ export default function Card({ product, page }: { product: IProduct, page: strin
       </Link>
       {
         page === 'store' && <div className='flex flex-row justify-end mt-4'>
-          <Modal type='updateProduct' product={product} />
-          <Modal type='deleteProduct' product={product} />
+          <Modal type='updateProduct' data={product} />
+          <Modal type='deleteProduct' data={product} />
         </div>
       }
     </article >
