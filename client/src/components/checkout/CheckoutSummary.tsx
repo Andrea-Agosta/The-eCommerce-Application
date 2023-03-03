@@ -41,7 +41,7 @@ export const CheckoutSummary = () => {
               {/* //todo with react component */}
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">Subtotal</dt>
-                <dd className="mt-1 text-sm text-gray-900">${totalPrice}</dd>
+                <dd className="mt-1 text-sm text-gray-900">${totalPrice.toFixed(2)}</dd>
               </div>
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">Tax</dt>

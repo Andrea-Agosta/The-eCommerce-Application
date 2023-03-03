@@ -71,7 +71,6 @@ function NewUserForm({ handleClose }: IRegistrationState) {
         setError(prev => ({ ...prev, userNotFound: "Somthing goes wrong, please try again!" }));
       });
     };
-    console.log(!emailRegex.test(registration.email), 'email')
     !emailRegex.test(registration.email) && setError(prev => ({ ...prev, email: "Plese insert a valid Email value" }));
     !registration.password && setError(prev => ({ ...prev, password: "Plese insert the Password value" }));
     !registration.confirmed_password && setError(prev => ({ ...prev, confirmed_password: "Please confirm your Password" }));

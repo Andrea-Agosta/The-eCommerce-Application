@@ -26,8 +26,19 @@ const ProductID = () => {
       } else {
         setCartItems(prevState => [...prevState, { quantity: rangeValue, product: product, total: price }]);
       }
+      localStorage.setItem('cart', JSON.stringify(cartItems));
     }
   }
+
+  useEffect(() => {
+    const handleUnload = () => {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+    };
+    window.addEventListener('beforeunload', handleUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [cartItems]);
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cart');
